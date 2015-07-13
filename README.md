@@ -1,5 +1,5 @@
 # ParticleToolchain
-Just a compilation of the toolchain required for building the [Particle](http://www.particle.io/) firmware.
+Just a compilation of the toolchain required for building the [Particle](http://www.particle.io/) firmware.  Uses the NSIS installer to download and install the components.
 
 ##Components
 * [GCC ARM Embedded, version 4.9-2015-q1-update](https://launchpad.net/gcc-arm-embedded)
