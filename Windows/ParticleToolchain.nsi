@@ -16,10 +16,12 @@ Name "Particle Toolchain"
 !include 'LogicLib.nsh'
 !include 'Sections.nsh'
 !include 'TextFunc.nsh'
-
+!include "DotNetChecker.nsh"
+!define PRODUCT_NAME "Particle Toolchain"
 !include 'x64.nsh'
 !insertmacro VersionCompare
 !insertmacro ConfigWrite
+ 
 
 !macro _StrReplaceConstructor ORIGINAL_STRING TO_REPLACE REPLACE_BY
   Push "${ORIGINAL_STRING}"
@@ -59,8 +61,13 @@ Function .onInit
     Var /GLOBAL JDK64_ADDRESS
     Var /GLOBAL CYGWIN_ADDR
     Var /GLOBAL CYGWIN64_ADDR
+    Var /GLOBAL NODE_ADDR
+    Var /GLOBAL NODE64_ADDR
+    Var /GLOBAL PYTHON_ADDR
+    Var /GLOBAL PYTHON64_ADDR
+    Var /GLOBAL MSBUILD_ADDR
     
-     Var /GLOBAL GCC_ARM_VER
+    Var /GLOBAL GCC_ARM_VER
     Var /GLOBAL MAKE_BINARY_VER
     Var /GLOBAL MAKE_DEPEND_VER
     Var /GLOBAL MINGW_VER
@@ -70,6 +77,11 @@ Function .onInit
     Var /GLOBAL JDK64_VER
     Var /GLOBAL CYGWIN_VER
     Var /GLOBAL CYGWIN64_VER
+    Var /GLOBAL NODE_VER
+    Var /GLOBAL NODE64_VER
+    Var /GLOBAL PYTHON_VER
+    Var /GLOBAL PYTHON64_VER
+    Var /GLOBAL MSBUILD_VER
     
     StrCpy "$TempFile" "$TEMP\release_info.json"
     inetc::get /QUESTION "" /BANNER "Downloading Installation Info"  /CAPTION "Downloading..." /RESUME "" "${JSON_ADDRESS}" "$TempFile" /END
@@ -144,6 +156,41 @@ Function .onInit
         StrCpy "$CYGWIN64_ADDR" "$R0"
     ${EndIf}
     
+    ClearErrors
+    nsJSON::Get /noexpand `NODEJS` `url` /end
+    ${IfNot} ${Errors}
+        Pop $R0
+        StrCpy "$NODE_ADDR" "$R0"
+    ${EndIf}
+    
+    ClearErrors
+    nsJSON::Get /noexpand `NODEJS_64` `url` /end
+    ${IfNot} ${Errors}
+        Pop $R0
+        StrCpy "$NODE64_ADDR" "$R0"
+    ${EndIf}
+    
+    ClearErrors
+    nsJSON::Get /noexpand `PYTHON` `url` /end
+    ${IfNot} ${Errors}
+        Pop $R0
+        StrCpy "$PYTHON_ADDR" "$R0"
+    ${EndIf}
+    
+    ClearErrors
+    nsJSON::Get /noexpand `PYTHON64` `url` /end
+    ${IfNot} ${Errors}
+        Pop $R0
+        StrCpy "$PYTHON64_ADDR" "$R0"
+    ${EndIf}
+    
+    ClearErrors
+    nsJSON::Get /noexpand `MS_BUILD` `url` /end
+    ${IfNot} ${Errors}
+        Pop $R0
+        StrCpy "$MSBUILD_ADDR" "$R0"
+    ${EndIf}
+    
     
     
     
@@ -216,6 +263,43 @@ Function .onInit
         Pop $R0
         StrCpy "$CYGWIN64_VER" "$R0"
     ${EndIf}
+    
+     ClearErrors
+    nsJSON::Get /noexpand `NODEJS` `ver` /end
+    ${IfNot} ${Errors}
+        Pop $R0
+        StrCpy "$NODE_VER" "$R0"
+    ${EndIf}
+    
+    ClearErrors
+    nsJSON::Get /noexpand `NODEJS_64` `ver` /end
+    ${IfNot} ${Errors}
+        Pop $R0
+        StrCpy "$NODE64_VER" "$R0"
+    ${EndIf}
+    
+    ClearErrors
+    nsJSON::Get /noexpand `PYTHON` `ver` /end
+    ${IfNot} ${Errors}
+        Pop $R0
+        StrCpy "$PYTHON_VER" "$R0"
+    ${EndIf}
+    
+    ClearErrors
+    nsJSON::Get /noexpand `PYTHON64` `ver` /end
+    ${IfNot} ${Errors}
+        Pop $R0
+        StrCpy "$PYTHON64_VER" "$R0"
+    ${EndIf}
+     
+    ClearErrors
+    nsJSON::Get /noexpand `MS_BUILD` `ver` /end
+    ${IfNot} ${Errors}
+        Pop $R0
+        StrCpy "$MSBUILD_VER" "$R0"
+    ${EndIf}
+    
+    
 FunctionEnd
 
 
@@ -332,9 +416,9 @@ SectionGroup "Particle Firmware" SEC_GRP1
         SectionIn 1 RO
         SetOutPath "$INSTDIR"
         DetailPrint "Git Clone Firmware"
-        ExecWait "git clone https://github.com/spark/firmware"
+        nsExec::ExecToLog "git clone https://github.com/spark/firmware"
         SetOutPath "$INSTDIR\firmware"
-        ExecWait "git checkout latest"
+        nsExec::ExecToLog "git checkout latest"
     SectionEnd
         
     Section "Netbeans Project" SEC_OPT1
@@ -353,6 +437,21 @@ SectionGroup "Particle Firmware" SEC_GRP1
     Section "" PRIVSEC_TOGGLESTATE1 ;hidden section to keep track of state
     SectionEnd
 SectionGroupEnd
+
+Section "Particle CLI"
+	SectionIn 1
+	Call InstallParticleCLI
+SectionEnd
+
+Section "DFU Util"
+	SectionIn 1
+	SetOutPath "$INSTDIR\Tools\DFU-util"
+	File dfu*.exe
+	File libusb*.dll
+	DetailPrint "Adding Path"
+	Push "$INSTDIR\Tools\DFU-util"
+	Call AddToPath
+SectionEnd
 
 Section
     ; Write the installation path into the registry
@@ -526,10 +625,10 @@ Function InstallGit
     MessageBox MB_RETRYCANCEL|MB_ICONEXCLAMATION "Download error, Retry?" /SD IDCANCEL IDRETRY Download
     Abort
     dlok:
-    CreateDirectory "$INSTDIR\Git"
+    CreateDirectory "$INSTDIR\Tools\Git"
     SetOutPath $TEMP
     File "git_setup.inf"
-    ExecWait '"$TempFile" /SILENT /SP- /DIR=$INSTDIR\Git /LOADINF="$TEMP\git_setup.inf"'
+    ExecWait '"$TempFile" /SILENT /SP- /DIR=$INSTDIR\Tools\Git /LOADINF="$TEMP\git_setup.inf"'
     Delete "$TEMP\git_setup.inf"
     Delete "$TempFile"
 
@@ -563,8 +662,8 @@ Function InstallNetbeans
     MessageBox MB_RETRYCANCEL|MB_ICONEXCLAMATION "Download error, Retry?" /SD IDCANCEL IDRETRY Download
     Abort
     dlok:
-    CreateDirectory "$INSTDIR\Netbeans"
-    ExecWait '"$TempFile" --silent "-J-Dnb-base.installation.location=$INSTDIR\Netbeans"'
+    CreateDirectory "$INSTDIR\Tools\Netbeans"
+    ExecWait '"$TempFile" --silent "-J-Dnb-base.installation.location=$INSTDIR\Tools\Netbeans"'
     Delete "$TempFile"
     
     
@@ -621,7 +720,82 @@ Function InstallCygwin
     MessageBox MB_RETRYCANCEL|MB_ICONEXCLAMATION "Download error, Retry?" /SD IDCANCEL IDRETRY Download
     Abort
     dlok:
-    ExecWait '"$TempFile" -q -R "$INSTDIR\Cygwin" -l "$INSTDIR\Cygwin\Packages" -s "http://cygwin.mirror.constant.com"'
+    ExecWait '"$TempFile" -q -R "$INSTDIR\Tools\Cygwin" -l "$INSTDIR\Tools\Cygwin\Packages" -s "http://cygwin.mirror.constant.com"'
+FunctionEnd
+
+Function InstallParticleCLI
+
+    SetOutPath "$InstDir"
+	DetailPrint "Downloading NodeJS"
+    StrCpy "$TempFile" "$TEMP\node_setup.msi"
+    Download:
+    ${If} ${RunningX64}
+        ; 64 bit code
+        inetc::get /QUESTION "" /RESUME "" /USERAGENT "Wget/1.9.1" "$NODE64_ADDR" "$TempFile" /END
+    ${Else}
+        ; 32 bit code
+        inetc::get /QUESTION "" /RESUME "" /USERAGENT "Wget/1.9.1" "$NODE_ADDR" "$TempFile" /END
+    ${EndIf}
+    Pop $0
+    StrCmp $0 "OK" dlok
+    SetDetailsView show
+    DetailPrint "Error: $0"
+    MessageBox MB_RETRYCANCEL|MB_ICONEXCLAMATION "Download error, Retry?" /SD IDCANCEL IDRETRY Download
+    Abort
+    dlok:
+    DetailPrint "Installing NodeJS"
+    ;SetDetailsPrint none
+    ExecWait 'msiexec /i "$TempFile" INSTALLDIR="$INSTDIR\Tools\NodeJS" /passive'
+    SetDetailsPrint both
+    Delete "$TempFile"
+    
+    !insertmacro CheckNetFramework 451
+    
+    DetailPrint "Downloading MS Build Tools"
+    SetOutPath "$InstDir"
+    StrCpy "$TempFile" "$TEMP\buildtools.exe"
+    Download1:
+    inetc::get /QUESTION "" /RESUME "" /USERAGENT "Wget/1.9.1" "$MSBUILD_ADDR" "$TempFile" /END
+    Pop $0
+    StrCmp $0 "OK" dlok1
+    SetDetailsView show
+    DetailPrint "Error: $0"
+    MessageBox MB_RETRYCANCEL|MB_ICONEXCLAMATION "Download error, Retry?" /SD IDCANCEL IDRETRY Download1
+    Abort
+    dlok1:
+    DetailPrint "Installing MS Build Tools"
+   ; SetDetailsPrint none
+    ExecWait '"$TempFile" /Passive'
+    SetDetailsPrint both
+    Delete "$TempFile"
+    
+	DetailPrint "Downloading Python"
+    StrCpy "$TempFile" "$TEMP\python_setup.msi"
+    Download2:
+    ${If} ${RunningX64}
+        ; 64 bit code
+        inetc::get /QUESTION "" /RESUME "" /USERAGENT "Wget/1.9.1" "$PYTHON64_ADDR" "$TempFile" /END
+    ${Else}
+        ; 32 bit code
+        inetc::get /QUESTION "" /RESUME "" /USERAGENT "Wget/1.9.1" "$PYTHON_ADDR" "$TempFile" /END
+    ${EndIf}
+    Pop $0
+    StrCmp $0 "OK" dlok2
+    SetDetailsView show
+    DetailPrint "Error: $0"
+    MessageBox MB_RETRYCANCEL|MB_ICONEXCLAMATION "Download error, Retry?" /SD IDCANCEL IDRETRY Download2
+    Abort
+    dlok2:
+    DetailPrint "Installing Python"
+    ;SetDetailsPrint none
+    ExecWait 'msiexec /i "$TempFile" TARGETDIR="$INSTDIR\Tools\Python27" ALLUSERS=1 /passive'
+    SetDetailsPrint both
+    Delete "$TempFile"
+    
+    DetailPrint "Installing Particle CLI"
+   ; SetDetailsPrint none
+    nsExec::ExecToLog '"$INSTDIR\Tools\NodeJS\npm.cmd" install -g particle-cli'
+    SetDetailsPrint both
 FunctionEnd
 ;--------------------------------------------------------------------
 ; Path functions
@@ -938,4 +1112,7 @@ Function WriteToolchainProperties
 FunctionEnd
     
     
+    
+    
+
     
