@@ -341,9 +341,9 @@ SectionGroup "Toolchain"
         Call InstallMake
 
         DetailPrint "Adding Path"
-        Push "$INSTDIR\toolchain\Make\bin"
+        Push "$INSTDIR\Toolchain\Make\bin"
         Call AddToPath
-        
+              
     SectionEnd
     
     Section "MinGW"
@@ -357,10 +357,12 @@ SectionGroup "Toolchain"
         Call InstallMinGW
 
         DetailPrint "Adding Path"
-        Push "$INSTDIR\toolchain\MinGW"
+        Push "$INSTDIR\Toolchain\MinGW"
         Call AddToPath
-        Push "$INSTDIR\toolchain\MinGW\msys\1.0\bin"
-        Call AddToPath
+        Push "$INSTDIR\Toolchain\MinGW\msys\1.0\bin"
+        Call AddToPath  
+       
+        
         
     SectionEnd
     
@@ -375,9 +377,9 @@ SectionGroup "Toolchain"
         Call InstallGccArm
 
         DetailPrint "Adding Path"
-        Push "$INSTDIR\toolchain\GCC-ARM\bin"
-        Call AddToPath
-        
+        Push "$INSTDIR\Toolchain\GCC-ARM\bin"
+        Call AddToPath  
+         
     SectionEnd
 SectionGroupEnd
 
@@ -385,6 +387,12 @@ Section Git
     SectionIn 1
     DetailPrint "Installing Git"
     Call InstallGit
+    ReadEnvStr $R0 "PATH"
+	StrCpy $R0 "$R0;$INSTDIR\Tools\Git\cmd"
+    System::Call 'Kernel32::SetEnvironmentVariable(t, t) i("PATH", R0).r0'
+    ReadEnvStr $R0 "PATH"
+    
+            
 SectionEnd
 
 SectionGroup "Netbeans (Install JDK if not installed)" SEC_GRP
@@ -494,13 +502,13 @@ Section "Uninstall"
     ; Remove directories used
     ; RMDir "$SMPROGRAMS\Example2"
     RMDir "$INSTDIR"
-    Push "$INSTDIR\toolchain\Make\bin"
+    Push "$INSTDIR\Toolchain\Make\bin"
     Call un.RemoveFromPath
-    Push "$INSTDIR\toolchain\GCC-ARM\bin"
+    Push "$INSTDIR\Toolchain\GCC-ARM\bin"
     Call un.RemoveFromPath
-    Push "$INSTDIR\toolchain\MinGW"
+    Push "$INSTDIR\Toolchain\MinGW"
     Call un.RemoveFromPath
-    Push "$INSTDIR\toolchain\MinGW\msys\1.0\bin"
+    Push "$INSTDIR\Toolchain\MinGW\msys\1.0\bin"
     Call un.RemoveFromPath
 
 SectionEnd
@@ -749,6 +757,8 @@ Function InstallParticleCLI
     SetDetailsPrint both
     Delete "$TempFile"
     
+ 
+    
     !insertmacro CheckNetFramework 451
     
     DetailPrint "Downloading MS Build Tools"
@@ -794,7 +804,10 @@ Function InstallParticleCLI
     
     DetailPrint "Installing Particle CLI"
    ; SetDetailsPrint none
-    nsExec::ExecToLog '"$INSTDIR\Tools\NodeJS\npm.cmd" install -g particle-cli'
+	SetOutPath $TEMP
+	File install-particle-cli.bat
+    nsExec::ExecToLog 'install-particle-cli.bat'
+    Delete install-particle-cli.bat
     SetDetailsPrint both
 FunctionEnd
 ;--------------------------------------------------------------------
