@@ -86,152 +86,6 @@
           <df name="win32">
           </df>
         </df>
-        <df name="target">
-          <df name="communication">
-            <df name="platform-0-lto-prod-0">
-              <df name="lib">
-                <df name="tropicssl">
-                  <df name="library">
-                  </df>
-                </df>
-              </df>
-              <df name="src">
-              </df>
-            </df>
-          </df>
-          <df name="communication-dynalib">
-            <df name="platform-6-m">
-              <df name="src">
-              </df>
-            </df>
-          </df>
-          <df name="hal">
-            <df name="platform-0-lto">
-              <df name="src">
-                <df name="core">
-                </df>
-              </df>
-            </df>
-          </df>
-          <df name="hal-dynalib">
-            <df name="platform-6-m">
-              <df name="src">
-              </df>
-            </df>
-          </df>
-          <df name="main">
-            <df name="platform-0-lto">
-              <df name="src">
-              </df>
-              <df name="startup">
-              </df>
-            </df>
-          </df>
-          <df name="platform">
-            <df name="platform-0-lto">
-              <df name="MCU">
-                <df name="STM32F1xx">
-                  <df name="SPARK_Firmware_Driver">
-                    <df name="src">
-                    </df>
-                  </df>
-                  <df name="STM32_StdPeriph_Driver">
-                    <df name="src">
-                    </df>
-                  </df>
-                  <df name="STM32_USB_Device_Driver">
-                    <df name="src">
-                    </df>
-                  </df>
-                </df>
-              </df>
-              <df name="NET">
-                <df name="CC3000">
-                  <df name="CC3000_Host_Driver">
-                  </df>
-                </df>
-              </df>
-            </df>
-            <df name="platform-6-m">
-              <df name="MCU">
-                <df name="STM32F2xx">
-                  <df name="SPARK_Firmware_Driver">
-                    <df name="src">
-                    </df>
-                  </df>
-                  <df name="STM32_USB_Device_Driver">
-                    <df name="src">
-                    </df>
-                  </df>
-                  <df name="STM32_USB_OTG_Driver">
-                    <df name="src">
-                    </df>
-                  </df>
-                </df>
-              </df>
-            </df>
-          </df>
-          <df name="rt-dynalib">
-            <df name="platform-6-m">
-              <df name="src">
-              </df>
-            </df>
-          </df>
-          <df name="services">
-            <df name="platform-0-lto">
-              <df name="src">
-              </df>
-            </df>
-          </df>
-          <df name="services-dynalib">
-            <df name="arm">
-              <df name="src">
-              </df>
-            </df>
-          </df>
-          <df name="system">
-            <df name="platform-0-lto">
-              <df name="src">
-              </df>
-            </df>
-          </df>
-          <df name="system-dynalib">
-            <df name="platform-6-m">
-              <df name="src">
-              </df>
-            </df>
-          </df>
-          <df name="user">
-            <df name="platform-0-lto">
-              <df name="src">
-                <df name="src">
-                </df>
-              </df>
-            </df>
-            <df name="platform-6-m">
-              <df name="src">
-                <df name="src">
-                </df>
-              </df>
-            </df>
-          </df>
-          <df name="user-part">
-            <df name="platform-6-m">
-              <df name="src">
-              </df>
-            </df>
-          </df>
-          <df name="wiring">
-            <df name="platform-0-lto">
-              <df name="src">
-              </df>
-            </df>
-            <df name="platform-6-m">
-              <df name="src">
-              </df>
-            </df>
-          </df>
-        </df>
         <df name="test">
         </df>
       </df>
@@ -1828,8 +1682,10 @@
       <runprofile version="9">
         <runcommandpicklist>
           <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
+          <runcommandpicklistitem>${MAKE} -f makefile PLATFORM=core</runcommandpicklistitem>
+          <runcommandpicklistitem>${MAKE} -f makefile PLATFORM=core program-dfu</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}"</runcommand>
+        <runcommand>${MAKE} -f makefile PLATFORM=core program-dfu</runcommand>
         <rundir>../../firmware/main</rundir>
         <buildfirst>false</buildfirst>
         <terminal-type>0</terminal-type>
@@ -1873,8 +1729,9 @@
       <runprofile version="9">
         <runcommandpicklist>
           <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
+          <runcommandpicklistitem>${MAKE} -f makefile PLATFORM=photon program-dfu</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}"</runcommand>
+        <runcommand>${MAKE} -f makefile PLATFORM=photon program-dfu</runcommand>
         <rundir>../../firmware/main</rundir>
         <buildfirst>false</buildfirst>
         <terminal-type>0</terminal-type>

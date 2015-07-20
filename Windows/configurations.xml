@@ -2,69 +2,9 @@
 <configurationDescriptor version="95">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <df root="../../firmware" name="0">
-      <df name="communication">
-        <df name="lib">
-          <df name="tropicssl">
-            <df name="library">
-              <in>aes.c</in>
-              <in>bignum.c</in>
-              <in>padlock.c</in>
-              <in>rsa.c</in>
-              <in>sha1.c</in>
-            </df>
-          </df>
-        </df>
-        <df name="src">
-          <in>coap.cpp</in>
-          <in>communication_dynalib.cpp</in>
-          <in>dsakeygen.cpp</in>
-          <in>events.cpp</in>
-          <in>handshake.cpp</in>
-          <in>spark_protocol.cpp</in>
-          <in>spark_protocol_functions.cpp</in>
-        </df>
-      </df>
       <df name="communication-dynalib">
         <df name="src">
           <in>communication_dynalib.c</in>
-        </df>
-      </df>
-      <df name="hal">
-        <df name="src">
-          <df name="core">
-            <in>adc_hal.c</in>
-            <in>core_hal.c</in>
-            <in>core_subsys_hal.c</in>
-            <in>dac_hal.c</in>
-            <in>delay_hal.c</in>
-            <in>deviceid_hal.cpp</in>
-            <in>eeprom_hal.c</in>
-            <in>gpio_hal.c</in>
-            <in>hal_dynalib_export.c</in>
-            <in>i2c_hal.c</in>
-            <in>inet_hal.c</in>
-            <in>interrupts_hal.c</in>
-            <in>memory_hal.cpp</in>
-            <in>newlib_stubs.cpp</in>
-            <in>ota_flash_hal.c</in>
-            <in>pinmap_hal.c</in>
-            <in>product_store_hal.c</in>
-            <in>pwm_hal.c</in>
-            <in>rtc_hal.c</in>
-            <in>servo_hal.c</in>
-            <in>socket_hal.c</in>
-            <in>spi_hal.c</in>
-            <in>stm32_it.c</in>
-            <in>syshealth_hal.c</in>
-            <in>timer_hal.c</in>
-            <in>tone_hal.c</in>
-            <in>usart_hal.c</in>
-            <in>usb_desc.c</in>
-            <in>usb_hal.c</in>
-            <in>usb_istr.c</in>
-            <in>usb_prop.c</in>
-            <in>wlan_hal.c</in>
-          </df>
         </df>
       </df>
       <df name="hal-dynalib">
@@ -94,49 +34,6 @@
       </df>
       <df name="platform">
         <df name="MCU">
-          <df name="STM32F1xx">
-            <df name="SPARK_Firmware_Driver">
-              <df name="src">
-                <in>cc3000_spi.c</in>
-                <in>hw_config.c</in>
-                <in>spi_bus.c</in>
-                <in>sst25vf_spi.c</in>
-                <in>system_stm32f10x.c</in>
-                <in>usb_endp.c</in>
-                <in>usb_pwr.c</in>
-              </df>
-            </df>
-            <df name="STM32_StdPeriph_Driver">
-              <df name="src">
-                <in>misc.c</in>
-                <in>stm32f10x_adc.c</in>
-                <in>stm32f10x_bkp.c</in>
-                <in>stm32f10x_crc.c</in>
-                <in>stm32f10x_dma.c</in>
-                <in>stm32f10x_exti.c</in>
-                <in>stm32f10x_flash.c</in>
-                <in>stm32f10x_gpio.c</in>
-                <in>stm32f10x_i2c.c</in>
-                <in>stm32f10x_iwdg.c</in>
-                <in>stm32f10x_pwr.c</in>
-                <in>stm32f10x_rcc.c</in>
-                <in>stm32f10x_rtc.c</in>
-                <in>stm32f10x_spi.c</in>
-                <in>stm32f10x_tim.c</in>
-                <in>stm32f10x_usart.c</in>
-              </df>
-            </df>
-            <df name="STM32_USB_Device_Driver">
-              <df name="src">
-                <in>usb_core.c</in>
-                <in>usb_init.c</in>
-                <in>usb_int.c</in>
-                <in>usb_mem.c</in>
-                <in>usb_regs.c</in>
-                <in>usb_sil.c</in>
-              </df>
-            </df>
-          </df>
           <df name="STM32F2xx">
             <df name="SPARK_Firmware_Driver">
               <df name="src">
@@ -169,53 +66,15 @@
             </df>
           </df>
         </df>
-        <df name="NET">
-          <df name="CC3000">
-            <df name="CC3000_Host_Driver">
-              <in>cc3000_common.c</in>
-              <in>evnt_handler.c</in>
-              <in>hci.c</in>
-              <in>netapp.c</in>
-              <in>nvmem.c</in>
-              <in>security.c</in>
-              <in>socket.c</in>
-              <in>wlan.c</in>
-            </df>
-          </df>
-        </df>
       </df>
       <df name="rt-dynalib">
         <df name="src">
           <in>rt_dynalib.c</in>
         </df>
       </df>
-      <df name="services">
-        <df name="src">
-          <in>debug.c</in>
-          <in>jsmn.c</in>
-          <in>panic.c</in>
-          <in>rgbled.c</in>
-          <in>services_dynalib.c</in>
-        </df>
-      </df>
       <df name="services-dynalib">
         <df name="src">
           <in>services_dynalib.c</in>
-        </df>
-      </df>
-      <df name="system">
-        <df name="src">
-          <in>main.cpp</in>
-          <in>system_cloud.cpp</in>
-          <in>system_event.cpp</in>
-          <in>system_mode.cpp</in>
-          <in>system_network.cpp</in>
-          <in>system_sleep.cpp</in>
-          <in>system_task.cpp</in>
-          <in>system_update.cpp</in>
-          <in>system_ymodem.cpp</in>
-          <in>wifi_credentials_reader.cpp</in>
-          <in>wifitester.cpp</in>
         </df>
       </df>
       <df name="system-dynalib">
@@ -298,71 +157,51 @@
             ex="false"
             tool="0"
             flavor2="2">
-        <cTool flags="0">
-        </cTool>
       </item>
       <item path="../../firmware/hal-dynalib/src/hal_core.c"
             ex="false"
             tool="0"
             flavor2="2">
-        <cTool flags="0">
-        </cTool>
       </item>
       <item path="../../firmware/hal-dynalib/src/hal_dynalib.c"
             ex="false"
             tool="0"
             flavor2="2">
-        <cTool flags="0">
-        </cTool>
       </item>
       <item path="../../firmware/hal-dynalib/src/hal_gpio.c"
             ex="false"
             tool="0"
             flavor2="2">
-        <cTool flags="0">
-        </cTool>
       </item>
       <item path="../../firmware/hal-dynalib/src/hal_i2c.c"
             ex="false"
             tool="0"
             flavor2="2">
-        <cTool flags="0">
-        </cTool>
       </item>
       <item path="../../firmware/hal-dynalib/src/hal_peripherals.c"
             ex="false"
             tool="0"
             flavor2="2">
-        <cTool flags="0">
-        </cTool>
       </item>
       <item path="../../firmware/hal-dynalib/src/hal_socket.c"
             ex="false"
             tool="0"
             flavor2="2">
-        <cTool flags="0">
-        </cTool>
       </item>
       <item path="../../firmware/hal-dynalib/src/hal_spi.c"
             ex="false"
             tool="0"
             flavor2="2">
-        <cTool flags="0">
-        </cTool>
       </item>
       <item path="../../firmware/hal-dynalib/src/hal_usart.c"
             ex="false"
             tool="0"
             flavor2="2">
-        <cTool flags="0">
-        </cTool>
       </item>
       <item path="../../firmware/hal-dynalib/src/hal_wlan.c"
             ex="false"
             tool="0"
             flavor2="2">
-        <cTool flags="0">
-        </cTool>
       </item>
       <item path="../../firmware/modules/photon/user-part/src/module_info.c"
             ex="false"
@@ -748,36 +587,26 @@
             ex="false"
             tool="0"
             flavor2="2">
-        <cTool flags="0">
-        </cTool>
       </item>
       <item path="../../firmware/services-dynalib/src/services_dynalib.c"
             ex="false"
             tool="0"
             flavor2="2">
-        <cTool flags="0">
-        </cTool>
       </item>
       <item path="../../firmware/system-dynalib/src/system_dynalib.c"
             ex="false"
             tool="0"
             flavor2="2">
-        <cTool flags="0">
-        </cTool>
       </item>
       <item path="../../firmware/system-dynalib/src/system_dynalib_cloud.c"
             ex="false"
             tool="0"
             flavor2="2">
-        <cTool flags="0">
-        </cTool>
       </item>
       <item path="../../firmware/system-dynalib/src/system_dynalib_net.c"
             ex="false"
             tool="0"
             flavor2="2">
-        <cTool flags="0">
-        </cTool>
       </item>
       <item path="../../firmware/user/src/application.cpp"
             ex="false"
@@ -1510,71 +1339,51 @@
             ex="false"
             tool="0"
             flavor2="2">
-        <cTool flags="0">
-        </cTool>
       </item>
       <item path="../../firmware/hal-dynalib/src/hal_core.c"
             ex="false"
             tool="0"
             flavor2="2">
-        <cTool flags="0">
-        </cTool>
       </item>
       <item path="../../firmware/hal-dynalib/src/hal_dynalib.c"
             ex="false"
             tool="0"
             flavor2="2">
-        <cTool flags="0">
-        </cTool>
       </item>
       <item path="../../firmware/hal-dynalib/src/hal_gpio.c"
             ex="false"
             tool="0"
             flavor2="2">
-        <cTool flags="0">
-        </cTool>
       </item>
       <item path="../../firmware/hal-dynalib/src/hal_i2c.c"
             ex="false"
             tool="0"
             flavor2="2">
-        <cTool flags="0">
-        </cTool>
       </item>
       <item path="../../firmware/hal-dynalib/src/hal_peripherals.c"
             ex="false"
             tool="0"
             flavor2="2">
-        <cTool flags="0">
-        </cTool>
       </item>
       <item path="../../firmware/hal-dynalib/src/hal_socket.c"
             ex="false"
             tool="0"
             flavor2="2">
-        <cTool flags="0">
-        </cTool>
       </item>
       <item path="../../firmware/hal-dynalib/src/hal_spi.c"
             ex="false"
             tool="0"
             flavor2="2">
-        <cTool flags="0">
-        </cTool>
       </item>
       <item path="../../firmware/hal-dynalib/src/hal_usart.c"
             ex="false"
             tool="0"
             flavor2="2">
-        <cTool flags="0">
-        </cTool>
       </item>
       <item path="../../firmware/hal-dynalib/src/hal_wlan.c"
             ex="false"
             tool="0"
             flavor2="2">
-        <cTool flags="0">
-        </cTool>
       </item>
       <item path="../../firmware/modules/photon/user-part/src/module_info.c"
             ex="false"
@@ -1960,36 +1769,26 @@
             ex="false"
             tool="0"
             flavor2="2">
-        <cTool flags="0">
-        </cTool>
       </item>
       <item path="../../firmware/services-dynalib/src/services_dynalib.c"
             ex="false"
             tool="0"
             flavor2="2">
-        <cTool flags="0">
-        </cTool>
       </item>
       <item path="../../firmware/system-dynalib/src/system_dynalib.c"
             ex="false"
             tool="0"
             flavor2="2">
-        <cTool flags="0">
-        </cTool>
       </item>
       <item path="../../firmware/system-dynalib/src/system_dynalib_cloud.c"
             ex="false"
             tool="0"
             flavor2="2">
-        <cTool flags="0">
-        </cTool>
       </item>
       <item path="../../firmware/system-dynalib/src/system_dynalib_net.c"
             ex="false"
             tool="0"
             flavor2="2">
-        <cTool flags="0">
-        </cTool>
       </item>
       <item path="../../firmware/user/src/application.cpp"
             ex="false"

@@ -21,6 +21,57 @@ Name "Particle Toolchain"
 !include 'x64.nsh'
 !insertmacro VersionCompare
 !insertmacro ConfigWrite
+!define REG_PATH "Software\ParticleToolchain"
+
+;FileExists is already part of LogicLib, but returns true for directories as well as files
+!macro _FileExists2 _a _b _t _f
+	!insertmacro _LOGICLIB_TEMP
+	StrCpy $_LOGICLIB_TEMP "0"
+	StrCmp `${_b}` `` +4 0 ;if path is not blank, continue to next check
+	IfFileExists `${_b}` `0` +3 ;if path exists, continue to next check (IfFileExists returns true if this is a directory)
+	IfFileExists `${_b}\*.*` +2 0 ;if path is not a directory, continue to confirm exists
+	StrCpy $_LOGICLIB_TEMP "1" ;file exists
+	;now we have a definitive value - the file exists or it does not
+	StrCmp $_LOGICLIB_TEMP "1" `${_t}` `${_f}`
+!macroend
+!undef FileExists
+!define FileExists `"" FileExists2`
+!macro _DirExists _a _b _t _f
+	!insertmacro _LOGICLIB_TEMP
+	StrCpy $_LOGICLIB_TEMP "0"	
+	StrCmp `${_b}` `` +3 0 ;if path is not blank, continue to next check
+	IfFileExists `${_b}\*.*` 0 +2 ;if directory exists, continue to confirm exists
+	StrCpy $_LOGICLIB_TEMP "1"
+	StrCmp $_LOGICLIB_TEMP "1" `${_t}` `${_f}`
+!macroend
+!define DirExists `"" DirExists`
+
+!macro IfKeyExists ROOT MAIN_KEY KEY
+  Push $R0
+  Push $R1
+  Push $R2
+ 
+  # XXX bug if ${ROOT}, ${MAIN_KEY} or ${KEY} use $R0 or $R1
+ 
+  StrCpy $R1 "0" # loop index
+  StrCpy $R2 "0" # not found
+ 
+  ${Do}
+    EnumRegKey $R0 ${ROOT} "${MAIN_KEY}" "$R1"
+    ${If} $R0 == "${KEY}"
+      StrCpy $R2 "1" # found
+      ${Break}
+    ${EndIf}
+    IntOp $R1 $R1 + 1
+  ${LoopWhile} $R0 != ""
+ 
+  ClearErrors
+ 
+  Exch 2
+  Pop $R0
+  Pop $R1
+  Exch $R2
+!macroend
  
 
 !macro _StrReplaceConstructor ORIGINAL_STRING TO_REPLACE REPLACE_BY
@@ -306,7 +357,7 @@ FunctionEnd
 
 ; Registry key to check for directory (so if you install again, it will
 ; overwrite the old one automatically)
-InstallDirRegKey HKLM "Software\ParticleToolchain" "Install_Dir"
+InstallDirRegKey HKLM "${REG_PATH}" "Install_Dir"
 
 ; Request application privileges for Windows Vista
 RequestExecutionLevel admin
@@ -324,6 +375,7 @@ UninstPage instfiles
 
 InstType "Full"
 InstType "Toolchain Only"
+InstType "CLI Only"
 
 
 
@@ -335,7 +387,7 @@ InstType "Toolchain Only"
 SectionGroup "Toolchain"
     Section "Make"
         SectionIn 1 2
-        ;AddSize 758776
+        AddSize 2263
         DetailPrint "Installing Make"
 
         Call InstallMake
@@ -348,7 +400,7 @@ SectionGroup "Toolchain"
     
     Section "MinGW"
         SectionIn 1 2
-        ;AddSize 758776
+        AddSize 441344
         DetailPrint "Installing MinGW"
 
         ; Set output path to the installation directory.
@@ -368,7 +420,7 @@ SectionGroup "Toolchain"
     
     Section "GCC ARM"
         SectionIn 1 2
-        ;AddSize 758776
+        AddSize 314368
         DetailPrint "Installing GCC ARM"
 
         ; Set output path to the installation directory.
@@ -385,18 +437,21 @@ SectionGroupEnd
 
 Section Git
     SectionIn 1
+    AddSize 270336
     DetailPrint "Installing Git"
     Call InstallGit
     ReadEnvStr $R0 "PATH"
 	StrCpy $R0 "$R0;$INSTDIR\Tools\Git\cmd"
     System::Call 'Kernel32::SetEnvironmentVariable(t, t) i("PATH", R0).r0'
     ReadEnvStr $R0 "PATH"
+    DetailPrint $R0
     
             
 SectionEnd
 
 SectionGroup "Netbeans (Install JDK if not installed)" SEC_GRP
     Section "Netbeans" SEC_REQ
+		AddSize 248832
         SectionIn 1 RO
         DetailPrint "Installing Netbeans"
         Call InstallNetbeans
@@ -415,12 +470,14 @@ SectionGroupEnd
 
 Section "Cygwin (needed for automatic build in Netbeans)"
     SectionIn 1
+    AddSize 144384
     DetailPrint "Installing Cygwin"
     Call InstallCygwin
 SectionEnd
 
 SectionGroup "Particle Firmware" SEC_GRP1
     Section "Firmware" SEC_REQ1
+		AddSize 117720
         SectionIn 1 RO
         SetOutPath "$INSTDIR"
         DetailPrint "Git Clone Firmware"
@@ -430,7 +487,9 @@ SectionGroup "Particle Firmware" SEC_GRP1
     SectionEnd
         
     Section "Netbeans Project" SEC_OPT1
+		AddSize 200
         SectionIn 1
+        SetOverwrite off
         SetOutPath "$INSTDIR\NBProjects\ParticleFirmware\nbproject"
         File configurations.xml
         File project.xml
@@ -440,6 +499,7 @@ SectionGroup "Particle Firmware" SEC_GRP1
         File private.xml
         File Core.properties
         File Launcher.properties
+        SetOverwrite on
     SectionEnd
     
     Section "" PRIVSEC_TOGGLESTATE1 ;hidden section to keep track of state
@@ -447,12 +507,14 @@ SectionGroup "Particle Firmware" SEC_GRP1
 SectionGroupEnd
 
 Section "Particle CLI"
-	SectionIn 1
+	SectionIn 1 3
+	AddSize 123801
 	Call InstallParticleCLI
 SectionEnd
 
 Section "DFU Util"
-	SectionIn 1
+	SectionIn 1 3
+	
 	SetOutPath "$INSTDIR\Tools\DFU-util"
 	File dfu*.exe
 	File libusb*.dll
@@ -480,27 +542,24 @@ SectionEnd
 
 Section "Uninstall"
 
+	; Uninstall NodeJS
+	;nsExec::ExecToLog "msiexec /x{B716A4B0-5096-4132-A741-2D99CFF53207} /passive"
+	; Uninstall Python
+	;nsExec::ExecToLog "MsiExec.exe /x{E2B51919-207A-43EB-AE78-733F9C6797C2} /passive"
     ; Remove registry keys
     DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\ParticleToolchain"
     DeleteRegKey HKLM SOFTWARE\ParticleToolchain
-    ;nsExec::ExecToLog "removePath.bat"
+    
     RMDir /r /REBOOTOK "$INSTDir\Toolchain"
-    Delete "$INSTDir\removePath.bat"
-    Delete "$INSTDir\addPath.bat"
-    Delete "$INSTDir\pathed.exe"
 
+	
 
-
-
+	RMDir /r /REBOOTOK "$INSTDir\Tools\DFU-util"
     ; Remove files and uninstaller
     ;  Delete $INSTDIR\ParticleToolchain.nsi
     Delete $INSTDIR\uninstall.exe
 
-    ; Remove shortcuts, if any
-    ;Delete "$SMPROGRAMS\Example2\*.*"
-
-    ; Remove directories used
-    ; RMDir "$SMPROGRAMS\Example2"
+   
     RMDir "$INSTDIR"
     Push "$INSTDIR\Toolchain\Make\bin"
     Call un.RemoveFromPath
@@ -510,7 +569,9 @@ Section "Uninstall"
     Call un.RemoveFromPath
     Push "$INSTDIR\Toolchain\MinGW\msys\1.0\bin"
     Call un.RemoveFromPath
-
+    Push "$INSTDIR\Tools\DFU-util"
+	Call un.RemoveFromPath
+     
 SectionEnd
 
 
@@ -551,6 +612,21 @@ Function .onSelChange
 FunctionEnd
 
 Function InstallGccArm
+	DetailPrint "Checking GCC Version Installed"
+	ClearErrors
+	ReadRegStr $0 HKLM "${REG_PATH}" "GCC_ARM_Version"
+	IfErrors 0 CheckGCC_Ver
+	goto  InstallGCCArmNow
+	CheckGCC_Ver:
+	${VersionCompare} $0 "$GCC_ARM_VER" $R0
+    ${If} $R0 == 2
+        DetailPrint "Need to update GCC ARM"
+        goto InstallGCCArmNow
+	${Else}
+		goto EndFunc
+    ${EndIf}
+	
+	InstallGCCArmNow:
     StrCpy "$TempFile" "$TEMP\gcc-arm.zip"
     Download:
     
@@ -565,10 +641,28 @@ Function InstallGccArm
     CreateDirectory "$INSTDIR\Toolchain\GCC-ARM"
     nsisunz::UnzipToLog "$TempFile" "$INSTDIR\Toolchain\GCC-ARM\"
     Delete "$TempFile"
+     WriteRegStr HKLM "${REG_PATH}" "GCC_ARM_Version" "$GCC_ARM_VER"
+	
+    EndFunc:
 
 FunctionEnd
 
 Function InstallMake
+    DetailPrint "Checking Make Version Installed"
+	ClearErrors
+	ReadRegStr $0 HKLM "${REG_PATH}" "Make_Version"
+	IfErrors 0 CheckMakeVer
+	goto  InstallMakeNow
+	CheckMakeVer:
+	${VersionCompare} $0 "$MAKE_BINARY_VER" $R0
+    ${If} $R0 == 2
+        DetailPrint "Need to update Make"
+        goto InstallMakeNow
+	${Else}
+		goto EndFunc
+    ${EndIf}
+	
+	InstallMakeNow:
     StrCpy "$TempFile" "$TEMP\make_bin.zip"
     Download:
     
@@ -598,9 +692,27 @@ Function InstallMake
     dlok2:
     nsisunz::UnzipToLog "$TempFile" "$INSTDIR\Toolchain\Make\"
     Delete "$TempFile"
+    WriteRegStr HKLM "${REG_PATH}" "Make_Version" "$MAKE_BINARY_VER"
+	
+    EndFunc:
 FunctionEnd
 
 Function InstallMinGW
+	DetailPrint "Checking MinGw Version Installed"
+	ClearErrors
+	ReadRegStr $0 HKLM "${REG_PATH}" "MinGW_Version"
+	IfErrors 0 CheckminGW_Ver
+	goto  InstallMinGWNow
+	CheckminGW_Ver:
+	${VersionCompare} $0 "$MINGW_VER" $R0
+    ${If} $R0 == 2
+        DetailPrint "Need to update MinGW"
+        goto InstallMinGWNow
+	${Else}
+		goto EndFunc
+    ${EndIf}
+	
+	InstallMinGWNow:
     StrCpy "$TempFile" "$TEMP\mingw.zip"
     Download:
     
@@ -619,9 +731,29 @@ Function InstallMinGW
 
     DetailPrint "Downloading and Installing MinGW Packages"
     nsExec::ExecToLog '"$INSTDIR\Toolchain\MinGW\bin\mingw-get.exe" install mingw32-base mingw32-gcc-g++ msys-make mingw-developer-toolkit'
+    WriteRegStr HKLM "${REG_PATH}" "MinGW_Version" "$MINGW_VER"
+	
+    EndFunc:
 FunctionEnd
 
 Function InstallGit
+	DetailPrint "Checking Git Version Installed"
+	ClearErrors
+	ReadRegStr $0 HKLM "${REG_PATH}" "Git_Version"
+	IfErrors 0 CheckGit_Ver
+	goto  InstallGitNow
+	CheckGit_Ver:
+	${VersionCompare} $0 "$GIT_VER" $R0
+    ${If} $R0 == 2
+        DetailPrint "Need to update Git"
+        goto InstallGitNow
+	${Else}
+		goto EndFunc
+    ${EndIf}
+	
+	InstallGitNow:
+	DetailPrint "Downloading Git"
+
     StrCpy "$TempFile" "$TEMP\git.exe"
     Download:
     
@@ -639,7 +771,9 @@ Function InstallGit
     ExecWait '"$TempFile" /SILENT /SP- /DIR=$INSTDIR\Tools\Git /LOADINF="$TEMP\git_setup.inf"'
     Delete "$TEMP\git_setup.inf"
     Delete "$TempFile"
-
+	WriteRegStr HKLM "${REG_PATH}" "Git_Version" "$GIT_VER"
+	
+    EndFunc:
 FunctionEnd
 
 Function InstallNetbeans
@@ -658,6 +792,22 @@ Function InstallNetbeans
         Call InstallJDK
     ${EndIf}
     JavaInstalledAndUpdated:
+    
+    DetailPrint "Checking Netbeans Version Installed"
+	ClearErrors
+	ReadRegStr $0 HKLM "${REG_PATH}" "Netbeans_Version"
+	IfErrors 0 CheckNetbeans_Ver
+	goto  InstNetbeans
+	CheckNetbeans_Ver:
+	${VersionCompare} $0 "$NETBEANS_VER" $R0
+    ${If} $R0 == 2
+        DetailPrint "Need to update Netbeans"
+        goto InstNetbeans
+	${Else}
+		goto EndFunc
+    ${EndIf}
+	
+	InstNetbeans:
     DetailPrint "Installing Netbeans"
     StrCpy "$TempFile" "$TEMP\netbeans.exe"
     Download:
@@ -673,7 +823,9 @@ Function InstallNetbeans
     CreateDirectory "$INSTDIR\Tools\Netbeans"
     ExecWait '"$TempFile" --silent "-J-Dnb-base.installation.location=$INSTDIR\Tools\Netbeans"'
     Delete "$TempFile"
-    
+     WriteRegStr HKLM "${REG_PATH}" "Netbeans_Version" "$NETBEANS_VER"
+	
+    EndFunc:
     
 FunctionEnd
 
@@ -709,9 +861,24 @@ Function InstallJDK
 FunctionEnd
 
 Function InstallCygwin
+	DetailPrint "Checking Cygwin Version Installed"
+	ClearErrors
+	ReadRegStr $0 HKLM "${REG_PATH}" "Cygwin_Version"
+	IfErrors 0 CheckCygwin_Ver
+	goto  InstallCygwin
+	CheckCygwin_Ver:
+	${VersionCompare} $0 "$CYGWIN_VER" $R0
+    ${If} $R0 == 2
+        DetailPrint "Need to update Cygwin"
+        goto InstallCygwin
+	${Else}
+		goto EndFunc
+    ${EndIf}
+	
+	InstallCygwin:
     DetailPrint "Installing Cygwin"
-    CreateDirectory "$INSTDIR\Cygwin"
-    StrCpy "$TempFile" "$INSTDIR\Cygwin\Cygwin_setup.exe"
+    CreateDirectory "$INSTDIR\Tools\Cygwin"
+    StrCpy "$TempFile" "$INSTDIR\Tools\Cygwin\Cygwin_setup.exe"
     
     Download:
     ;${If} ${RunningX64}
@@ -729,10 +896,29 @@ Function InstallCygwin
     Abort
     dlok:
     ExecWait '"$TempFile" -q -R "$INSTDIR\Tools\Cygwin" -l "$INSTDIR\Tools\Cygwin\Packages" -s "http://cygwin.mirror.constant.com"'
+     WriteRegStr HKLM "${REG_PATH}" "Cygwin_Version" "$CYGWIN_VER"
+	
+    EndFunc:
 FunctionEnd
 
 Function InstallParticleCLI
 
+	;; Install NodeJS
+	DetailPrint "Checking NodeJs Version Installed"
+	ClearErrors
+	ReadRegStr $0 HKLM "${REG_PATH}" "NodeJs_Version"
+	IfErrors 0 CheckNodeJS_Ver
+	goto  InstallNodeJS
+	CheckNodeJS_Ver:
+	${VersionCompare} $0 "$NODE_VER" $R0
+    ${If} $R0 == 2
+        DetailPrint "Need to update NodeJS"
+        goto InstallNodeJS
+	${Else}
+		goto CheckDotNet
+    ${EndIf}
+	
+	InstallNodeJS:
     SetOutPath "$InstDir"
 	DetailPrint "Downloading NodeJS"
     StrCpy "$TempFile" "$TEMP\node_setup.msi"
@@ -756,11 +942,18 @@ Function InstallParticleCLI
     ExecWait 'msiexec /i "$TempFile" INSTALLDIR="$INSTDIR\Tools\NodeJS" /passive'
     SetDetailsPrint both
     Delete "$TempFile"
-    
- 
-    
+    WriteRegStr HKLM "${REG_PATH}" "NodeJs_Version" "$NODE_VER"
+	
+	CheckDotNet:
+    ;; Check .Net framework
     !insertmacro CheckNetFramework 451
     
+    ;; MS Build Tools
+    ClearErrors
+    EnumRegKey $0 HKLM "Software\Microsoft\MSBuild\ToolsVersions\12.0" 0
+    IfErrors 0 MSBuildInstalled
+    ; Need to install ms build tools   
+    DetailPrint "MS BuildTools not found. Installing."
     DetailPrint "Downloading MS Build Tools"
     SetOutPath "$InstDir"
     StrCpy "$TempFile" "$TEMP\buildtools.exe"
@@ -778,7 +971,30 @@ Function InstallParticleCLI
     ExecWait '"$TempFile" /Passive'
     SetDetailsPrint both
     Delete "$TempFile"
+    Goto CheckPython
     
+    
+    MSBuildInstalled:
+    DetailPrint "MS BuildTools Already Installed"
+    
+    
+    CheckPython:
+    ;; Install Python
+    DetailPrint "Checking Python Version Installed"
+	ClearErrors
+	ReadRegStr $0 HKLM "${REG_PATH}" "Python_Version"
+	IfErrors 0 CheckPython_Ver
+	goto  InstallPython
+	CheckPython_Ver:
+	${VersionCompare} $0 "$PYTHON_VER" $R0
+    ${If} $R0 == 2
+        DetailPrint "Need to update Python"
+        goto InstallPython
+	${Else}
+		goto InstallCli
+    ${EndIf}
+	
+	InstallPython:
 	DetailPrint "Downloading Python"
     StrCpy "$TempFile" "$TEMP\python_setup.msi"
     Download2:
@@ -802,13 +1018,33 @@ Function InstallParticleCLI
     SetDetailsPrint both
     Delete "$TempFile"
     
+    WriteRegStr HKLM "${REG_PATH}" "Python_Version" "$PYTHON_VER"
+    
+    InstallCli:
+    
+    ;; set path
+    ReadEnvStr $R0 "PATH"
+	StrCpy $R0 "$R0;$INSTDIR\Tools\NodeJS;$APPDATA\npm"
+    System::Call 'Kernel32::SetEnvironmentVariable(t, t) i("PATH", R0).r0'
+    ReadEnvStr $R0 "PATH"
+    DetailPrint $R0
+    
+    ;; check if particle-cli installed
+    SetOutPath "$APPDATA\npm"
+    nsExec::ExecToLog "$INSTDIR\Tools\NodeJS\npm.cmd ls particle-cli --parseable true"
+    Pop $0
+    ${If} $0 = 0 ; particle-cli seems to be installed, let's just run an update
+    DetailPrint "Updating Particle CLI"
+	SetOutPath "$INSTDIR\TOOLS\NodeJS"
+	nsExec::ExecToLog 'npm update particle-cli'
+	${else}
     DetailPrint "Installing Particle CLI"
    ; SetDetailsPrint none
-	SetOutPath $TEMP
+	SetOutPath "$INSTDIR\TOOLS\NodeJS"
 	File install-particle-cli.bat
     nsExec::ExecToLog 'install-particle-cli.bat'
     Delete install-particle-cli.bat
-    SetDetailsPrint both
+    ${endif}
 FunctionEnd
 ;--------------------------------------------------------------------
 ; Path functions
@@ -1028,6 +1264,7 @@ done:
 FunctionEnd
 
 Function WriteToolchainProperties
+	SetOverWrite off
     ; Writes the toolchain properties for netbeans.  Won't overwrite existing
     ; config file, so if Netbeans has already been installed, this will need to be set up manually
     SetOutPath "$APPDATA\NetBeans\$NETBEANS_VER\config\Preferences\org\netbeans\modules\cnd"
@@ -1122,6 +1359,8 @@ Function WriteToolchainProperties
     IfFileExists "$TempFile" endFunc 0
     File cnd.properties
     endFunc:
+    
+    SetOverwrite on
 FunctionEnd
     
     
