@@ -1,0 +1,1744 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="95">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <df root="../../firmware" name="0">
+      <df name="bootloader">
+        <df name="src">
+          <df name="core">
+            <in>dfu_hal.c</in>
+            <in>dfu_mal.c</in>
+            <in>dfu_mal.h</in>
+            <in>flash_if.c</in>
+            <in>flash_if.h</in>
+            <in>spi_if.c</in>
+            <in>spi_if.h</in>
+            <in>stm32_it.c</in>
+            <in>stm32_it.h</in>
+            <in>syshealth.c</in>
+            <in>usb_conf.h</in>
+            <in>usb_desc.c</in>
+            <in>usb_desc.h</in>
+            <in>usb_istr.c</in>
+            <in>usb_istr.h</in>
+            <in>usb_prop.c</in>
+            <in>usb_prop.h</in>
+          </df>
+          <df name="photon">
+            <df name="stdperiphdriver">
+              <in>misc.c</in>
+              <in>stm32f2xx_adc.c</in>
+              <in>stm32f2xx_can.c</in>
+              <in>stm32f2xx_crc.c</in>
+              <in>stm32f2xx_cryp.c</in>
+              <in>stm32f2xx_cryp_aes.c</in>
+              <in>stm32f2xx_cryp_des.c</in>
+              <in>stm32f2xx_cryp_tdes.c</in>
+              <in>stm32f2xx_dac.c</in>
+              <in>stm32f2xx_dbgmcu.c</in>
+              <in>stm32f2xx_dcmi.c</in>
+              <in>stm32f2xx_dma.c</in>
+              <in>stm32f2xx_exti.c</in>
+              <in>stm32f2xx_flash.c</in>
+              <in>stm32f2xx_fsmc.c</in>
+              <in>stm32f2xx_gpio.c</in>
+              <in>stm32f2xx_hash.c</in>
+              <in>stm32f2xx_hash_md5.c</in>
+              <in>stm32f2xx_hash_sha1.c</in>
+              <in>stm32f2xx_i2c.c</in>
+              <in>stm32f2xx_iwdg.c</in>
+              <in>stm32f2xx_pwr.c</in>
+              <in>stm32f2xx_rcc.c</in>
+              <in>stm32f2xx_rng.c</in>
+              <in>stm32f2xx_rtc.c</in>
+              <in>stm32f2xx_sdio.c</in>
+              <in>stm32f2xx_spi.c</in>
+              <in>stm32f2xx_syscfg.c</in>
+              <in>stm32f2xx_tim.c</in>
+              <in>stm32f2xx_usart.c</in>
+              <in>stm32f2xx_wwdg.c</in>
+            </df>
+            <in>dfu_hal.c</in>
+            <in>platform.c</in>
+            <in>stm32_it.c</in>
+            <in>stm32_it.h</in>
+            <in>syshealth.c</in>
+            <in>usbd_desc.c</in>
+          </df>
+          <in>main.c</in>
+          <in>module_info.c</in>
+        </df>
+        <df name="tools">
+        </df>
+      </df>
+      <df name="build">
+        <df name="arm">
+          <df name="linker">
+          </df>
+          <df name="startup">
+            <in>spark_init.S</in>
+            <in>startup_newhalcpu.S</in>
+            <in>startup_stm32f10x_hd.S</in>
+            <in>startup_stm32f10x_md.S</in>
+            <in>startup_stm32f2xx.S</in>
+          </df>
+        </df>
+        <df name="bin">
+          <df name="win32">
+          </df>
+        </df>
+        <df name="test">
+        </df>
+      </df>
+      <df name="ci">
+        <df name="firmware">
+        </df>
+        <df name="unitth">
+        </df>
+      </df>
+      <df name="communication">
+        <df name="lib">
+          <df name="tropicssl">
+            <df name="include">
+              <df name="tropicssl">
+                <in>aes.h</in>
+                <in>bignum.h</in>
+                <in>bn_mul.h</in>
+                <in>config.h</in>
+                <in>padlock.h</in>
+                <in>rsa.h</in>
+                <in>sha1.h</in>
+              </df>
+            </df>
+            <df name="library">
+              <in>aes.c</in>
+              <in>bignum.c</in>
+              <in>padlock.c</in>
+              <in>rsa.c</in>
+              <in>sha1.c</in>
+            </df>
+          </df>
+        </df>
+        <df name="src">
+          <in>coap.cpp</in>
+          <in>coap.h</in>
+          <in>communication_dynalib.cpp</in>
+          <in>communication_dynalib.h</in>
+          <in>device_keys.h</in>
+          <in>dsakeygen.cpp</in>
+          <in>dsakeygen.h</in>
+          <in>events.cpp</in>
+          <in>events.h</in>
+          <in>file_transfer.h</in>
+          <in>handshake.cpp</in>
+          <in>handshake.h</in>
+          <in>spark_descriptor.h</in>
+          <in>spark_protocol.cpp</in>
+          <in>spark_protocol.h</in>
+          <in>spark_protocol_functions.cpp</in>
+          <in>spark_protocol_functions.h</in>
+        </df>
+        <df name="tests">
+          <df name="UnitTest++">
+            <df name="src">
+              <df name="Posix">
+                <in>SignalTranslator.cpp</in>
+                <in>SignalTranslator.h</in>
+                <in>TimeHelpers.cpp</in>
+                <in>TimeHelpers.h</in>
+              </df>
+              <df name="Win32">
+                <in>TimeHelpers.cpp</in>
+                <in>TimeHelpers.h</in>
+              </df>
+              <in>AssertException.cpp</in>
+              <in>AssertException.h</in>
+              <in>CheckMacros.h</in>
+              <in>Checks.cpp</in>
+              <in>Checks.h</in>
+              <in>Config.h</in>
+              <in>CurrentTest.cpp</in>
+              <in>CurrentTest.h</in>
+              <in>DeferredTestReporter.cpp</in>
+              <in>DeferredTestReporter.h</in>
+              <in>DeferredTestResult.cpp</in>
+              <in>DeferredTestResult.h</in>
+              <in>ExecuteTest.h</in>
+              <in>MemoryOutStream.cpp</in>
+              <in>MemoryOutStream.h</in>
+              <in>ReportAssert.cpp</in>
+              <in>ReportAssert.h</in>
+              <in>Test.cpp</in>
+              <in>Test.h</in>
+              <in>TestDetails.cpp</in>
+              <in>TestDetails.h</in>
+              <in>TestList.cpp</in>
+              <in>TestList.h</in>
+              <in>TestMacros.h</in>
+              <in>TestReporter.cpp</in>
+              <in>TestReporter.h</in>
+              <in>TestReporterStdout.cpp</in>
+              <in>TestReporterStdout.h</in>
+              <in>TestResults.cpp</in>
+              <in>TestResults.h</in>
+              <in>TestRunner.cpp</in>
+              <in>TestRunner.h</in>
+              <in>TestSuite.h</in>
+              <in>TimeConstraint.cpp</in>
+              <in>TimeConstraint.h</in>
+              <in>TimeHelpers.h</in>
+              <in>UnitTest++.h</in>
+              <in>XmlTestReporter.cpp</in>
+              <in>XmlTestReporter.h</in>
+            </df>
+          </df>
+          <in>ConstructorFixture.cpp</in>
+          <in>ConstructorFixture.h</in>
+          <in>Main.cpp</in>
+          <in>TestAES.cpp</in>
+          <in>TestCoAP.cpp</in>
+          <in>TestDescriptor.cpp</in>
+          <in>TestEvents.cpp</in>
+          <in>TestHandshake.cpp</in>
+          <in>TestQueue.cpp</in>
+          <in>TestSparkProtocol.cpp</in>
+          <in>TestStateMachine.cpp</in>
+          <in>TestUserFunctions.cpp</in>
+        </df>
+      </df>
+      <df name="communication-dynalib">
+        <df name="src">
+          <in>communication_dynalib.c</in>
+        </df>
+      </df>
+      <df name="docs">
+      </df>
+      <df name="dynalib">
+        <df name="inc">
+          <in>dynalib.h</in>
+          <in>module_info.h</in>
+          <in>module_info.inc</in>
+        </df>
+        <df name="src">
+        </df>
+      </df>
+      <df name="hal">
+        <df name="inc">
+          <in>adc_hal.h</in>
+          <in>concurrent_hal.h</in>
+          <in>core_hal.h</in>
+          <in>core_subsys_hal.h</in>
+          <in>dac_hal.h</in>
+          <in>delay_hal.h</in>
+          <in>deviceid_hal.h</in>
+          <in>dfu_hal.h</in>
+          <in>eeprom_hal.h</in>
+          <in>gpio_hal.h</in>
+          <in>hal_dynalib.h</in>
+          <in>hal_dynalib_core.h</in>
+          <in>hal_dynalib_gpio.h</in>
+          <in>hal_dynalib_i2c.h</in>
+          <in>hal_dynalib_ota.h</in>
+          <in>hal_dynalib_peripherals.h</in>
+          <in>hal_dynalib_socket.h</in>
+          <in>hal_dynalib_spi.h</in>
+          <in>hal_dynalib_usart.h</in>
+          <in>hal_dynalib_wlan.h</in>
+          <in>i2c_hal.h</in>
+          <in>inet_hal.h</in>
+          <in>interrupts_hal.h</in>
+          <in>interrupts_irq.h</in>
+          <in>memory_hal.h</in>
+          <in>ota_flash_hal.h</in>
+          <in>pinmap_hal.h</in>
+          <in>product_store_hal.h</in>
+          <in>pwm_hal.h</in>
+          <in>rgbled_hal.h</in>
+          <in>rng_hal.h</in>
+          <in>rtc_hal.h</in>
+          <in>servo_hal.h</in>
+          <in>socket_hal.h</in>
+          <in>spi_hal.h</in>
+          <in>syshealth_hal.h</in>
+          <in>timer_hal.h</in>
+          <in>tone_hal.h</in>
+          <in>usart_hal.h</in>
+          <in>usb_config_hal.h</in>
+          <in>usb_hal.h</in>
+          <in>watchdog_hal.h</in>
+          <in>wlan_hal.h</in>
+        </df>
+        <df name="shared">
+          <in>flash_device_hal.h</in>
+          <in>ledcontrol.h</in>
+          <in>module_info_hal.h</in>
+          <in>parse_server_address.h</in>
+          <in>system_tick_hal.h</in>
+        </df>
+        <df name="src">
+          <df name="core">
+            <in>adc_hal.c</in>
+            <in>core_hal.c</in>
+            <in>core_subsys_hal.c</in>
+            <in>dac_hal.c</in>
+            <in>delay_hal.c</in>
+            <in>deviceid_hal.cpp</in>
+            <in>eeprom_hal.c</in>
+            <in>gpio_hal.c</in>
+            <in>hal_dynalib_export.c</in>
+            <in>i2c_hal.c</in>
+            <in>inet_hal.c</in>
+            <in>interrupts_hal.c</in>
+            <in>memory_hal.cpp</in>
+            <in>newlib_stubs.cpp</in>
+            <in>ota_flash_hal.c</in>
+            <in>pinmap_hal.c</in>
+            <in>pinmap_impl.h</in>
+            <in>platform_headers.h</in>
+            <in>product_store_hal.c</in>
+            <in>pwm_hal.c</in>
+            <in>rtc_hal.c</in>
+            <in>servo_hal.c</in>
+            <in>socket_hal.c</in>
+            <in>spi_hal.c</in>
+            <in>stm32_it.c</in>
+            <in>syshealth_hal.c</in>
+            <in>timer_hal.c</in>
+            <in>tone_hal.c</in>
+            <in>usart_hal.c</in>
+            <in>usb_desc.c</in>
+            <in>usb_hal.c</in>
+            <in>usb_istr.c</in>
+            <in>usb_prop.c</in>
+            <in>wlan_hal.c</in>
+          </df>
+          <df name="gcc">
+            <in>boost_asio.cpp</in>
+            <in>core_hal.cpp</in>
+            <in>core_msg.h</in>
+            <in>core_subsys_hal.c</in>
+            <in>delay_hal.c</in>
+            <in>delay_hal.cpp</in>
+            <in>deviceid_hal.cpp</in>
+            <in>filesystem.cpp</in>
+            <in>filesystem.h</in>
+            <in>inet_hal.cpp</in>
+            <in>ota_flash_hal.cpp</in>
+            <in>pinger.cpp</in>
+            <in>platform_headers.h</in>
+            <in>rgbled.cpp</in>
+            <in>rgbled_hal.cpp</in>
+            <in>socket_hal.cpp</in>
+            <in>timer_hal.cpp</in>
+            <in>usart_hal.cpp</in>
+            <in>wlan_hal.c</in>
+          </df>
+          <df name="newhal">
+            <in>platform_headers.h</in>
+          </df>
+          <df name="photon">
+            <df name="api">
+              <in>concurrent_hal_impl.h</in>
+            </df>
+            <df name="include">
+              <in>default_wifi_config_dct.h</in>
+              <in>wiced.h</in>
+              <in>wiced_audio.h</in>
+              <in>wiced_constants.h</in>
+              <in>wiced_defaults.h</in>
+              <in>wiced_easy_setup.h</in>
+              <in>wiced_framework.h</in>
+              <in>wiced_management.h</in>
+              <in>wiced_platform.h</in>
+              <in>wiced_resource.h</in>
+              <in>wiced_result.h</in>
+              <in>wiced_rtos.h</in>
+              <in>wiced_security.h</in>
+              <in>wiced_tcpip.h</in>
+              <in>wiced_time.h</in>
+              <in>wiced_utilities.h</in>
+              <in>wiced_wifi.h</in>
+            </df>
+            <df name="lib">
+              <df name="FreeRTOS">
+              </df>
+              <df name="ThreadX">
+              </df>
+            </df>
+            <df name="libraries">
+              <df name="daemons">
+                <df name="DNS_redirect">
+                  <in>dns_redirect.h</in>
+                </df>
+                <df name="HTTP_server">
+                  <in>http_server.h</in>
+                </df>
+              </df>
+              <df name="utilities">
+                <df name="ring_buffer">
+                  <in>ring_buffer.h</in>
+                </df>
+              </df>
+            </df>
+            <df name="platforms">
+              <df name="BCM9WCDUSI09">
+                <in>platform.h</in>
+                <in>wifi_nvram_image.h</in>
+              </df>
+              <df name="BCM9WCDUSI14">
+                <in>platform.h</in>
+                <in>wifi_nvram_image.h</in>
+              </df>
+            </df>
+            <df name="wiced">
+              <df name="network">
+                <df name="LwIP">
+                  <df name="ver1.4.0.rc1">
+                    <df name="doc">
+                    </df>
+                    <df name="src">
+                      <df name="include">
+                        <df name="ipv4">
+                          <df name="lwip">
+                            <in>autoip.h</in>
+                            <in>icmp.h</in>
+                            <in>igmp.h</in>
+                            <in>inet.h</in>
+                            <in>inet_chksum.h</in>
+                            <in>ip.h</in>
+                            <in>ip_addr.h</in>
+                            <in>ip_frag.h</in>
+                          </df>
+                        </df>
+                        <df name="ipv6">
+                          <df name="lwip">
+                            <in>icmp.h</in>
+                            <in>inet.h</in>
+                            <in>ip.h</in>
+                            <in>ip_addr.h</in>
+                          </df>
+                        </df>
+                        <df name="lwip">
+                          <in>api.h</in>
+                          <in>api_msg.h</in>
+                          <in>arch.h</in>
+                          <in>debug.h</in>
+                          <in>def.h</in>
+                          <in>dhcp.h</in>
+                          <in>dns.h</in>
+                          <in>err.h</in>
+                          <in>init.h</in>
+                          <in>mem.h</in>
+                          <in>memp.h</in>
+                          <in>memp_std.h</in>
+                          <in>netbuf.h</in>
+                          <in>netdb.h</in>
+                          <in>netif.h</in>
+                          <in>netifapi.h</in>
+                          <in>opt.h</in>
+                          <in>pbuf.h</in>
+                          <in>raw.h</in>
+                          <in>sio.h</in>
+                          <in>snmp.h</in>
+                          <in>snmp_asn1.h</in>
+                          <in>snmp_msg.h</in>
+                          <in>snmp_structs.h</in>
+                          <in>sockets.h</in>
+                          <in>stats.h</in>
+                          <in>sys.h</in>
+                          <in>tcp.h</in>
+                          <in>tcp_impl.h</in>
+                          <in>tcpip.h</in>
+                          <in>timers.h</in>
+                          <in>udp.h</in>
+                        </df>
+                        <df name="netif">
+                          <in>etharp.h</in>
+                          <in>ppp_oe.h</in>
+                          <in>slipif.h</in>
+                        </df>
+                      </df>
+                      <df name="netif">
+                        <df name="ppp">
+                          <in>auth.h</in>
+                          <in>chap.h</in>
+                          <in>chpms.h</in>
+                          <in>fsm.h</in>
+                          <in>ipcp.h</in>
+                          <in>lcp.h</in>
+                          <in>magic.h</in>
+                          <in>md5.h</in>
+                          <in>pap.h</in>
+                          <in>ppp.h</in>
+                          <in>pppdebug.h</in>
+                          <in>randm.h</in>
+                          <in>vj.h</in>
+                        </df>
+                      </df>
+                    </df>
+                    <df name="test">
+                      <df name="unit">
+                        <df name="core">
+                          <in>test_mem.h</in>
+                        </df>
+                        <df name="etharp">
+                          <in>test_etharp.h</in>
+                        </df>
+                        <df name="tcp">
+                          <in>tcp_helper.h</in>
+                          <in>test_tcp.h</in>
+                          <in>test_tcp_oos.h</in>
+                        </df>
+                        <df name="udp">
+                          <in>test_udp.h</in>
+                        </df>
+                        <in>lwip_check.h</in>
+                      </df>
+                    </df>
+                  </df>
+                  <df name="WICED">
+                    <in>wiced_network.h</in>
+                    <in>wiced_ping.h</in>
+                  </df>
+                  <df name="WWD">
+                    <df name="FreeRTOS">
+                      <df name="arch">
+                        <in>cc.h</in>
+                        <in>perf.h</in>
+                        <in>sys_arch.h</in>
+                      </df>
+                      <in>cpu.h</in>
+                      <in>lwipopts.h</in>
+                    </df>
+                    <in>wwd_buffer.h</in>
+                    <in>wwd_network.h</in>
+                  </df>
+                </df>
+                <df name="NetX">
+                  <df name="ver5.5_sp1">
+                    <df name="netx_applications">
+                      <df name="auto_ip">
+                        <in>nx_auto_ip.h</in>
+                      </df>
+                      <df name="dhcp">
+                        <in>nx_dhcp.h</in>
+                        <in>nx_dhcp_server.h</in>
+                      </df>
+                      <df name="dns">
+                        <in>nx_dns.h</in>
+                      </df>
+                      <df name="ftp">
+                        <in>filex_stub.h</in>
+                        <in>nx_ftp.h</in>
+                      </df>
+                      <df name="http">
+                        <in>filex_stub.h</in>
+                        <in>nx_http.h</in>
+                        <in>nx_md5.h</in>
+                      </df>
+                      <df name="nat">
+                        <in>nx_nat.h</in>
+                      </df>
+                      <df name="pop3">
+                        <in>nx_md5.h</in>
+                        <in>nx_pop3.h</in>
+                        <in>nx_pop3_client.h</in>
+                        <in>nx_pop3_server.h</in>
+                      </df>
+                      <df name="ppp">
+                        <in>nx_md5.h</in>
+                        <in>nx_ppp.h</in>
+                      </df>
+                      <df name="smtp">
+                        <in>nx_smtp.h</in>
+                        <in>nx_smtp_client.h</in>
+                        <in>nx_smtp_server.h</in>
+                      </df>
+                      <df name="snmp">
+                        <in>nx_des.h</in>
+                        <in>nx_md5.h</in>
+                        <in>nx_sha1.h</in>
+                        <in>nx_snmp.h</in>
+                      </df>
+                      <df name="sntp">
+                        <in>nx_sntp_client.h</in>
+                      </df>
+                      <df name="telnet">
+                        <in>nx_telnet.h</in>
+                      </df>
+                      <df name="tftp">
+                        <in>filex_stub.h</in>
+                        <in>nx_tftp.h</in>
+                      </df>
+                    </df>
+                    <df name="netx_bsd_layer">
+                      <in>nx_bsd.h</in>
+                    </df>
+                    <in>nx_api.h</in>
+                    <in>nx_arp.h</in>
+                    <in>nx_icmp.h</in>
+                    <in>nx_igmp.h</in>
+                    <in>nx_ip.h</in>
+                    <in>nx_packet.h</in>
+                    <in>nx_port.h</in>
+                    <in>nx_rarp.h</in>
+                    <in>nx_system.h</in>
+                    <in>nx_tcp.h</in>
+                    <in>nx_udp.h</in>
+                    <in>nx_user.h</in>
+                  </df>
+                  <df name="WICED">
+                    <in>wiced_network.h</in>
+                  </df>
+                  <df name="WWD">
+                    <in>wwd_buffer.h</in>
+                    <in>wwd_network.h</in>
+                  </df>
+                </df>
+              </df>
+              <df name="platform">
+                <df name="ARM_CM3">
+                  <df name="CMSIS">
+                    <in>core_cm3.h</in>
+                    <in>core_cmFunc.h</in>
+                    <in>core_cmInstr.h</in>
+                  </df>
+                  <in>platform_assert.h</in>
+                  <in>platform_isr.h</in>
+                </df>
+                <df name="GCC">
+                  <in>linker_symbols.h</in>
+                  <in>platform_toolchain.h</in>
+                </df>
+                <df name="include">
+                  <in>elf.h</in>
+                  <in>platform_audio.h</in>
+                  <in>platform_constants.h</in>
+                  <in>platform_dct.h</in>
+                  <in>platform_external_memory.h</in>
+                  <in>platform_init.h</in>
+                  <in>platform_peripheral.h</in>
+                  <in>platform_resource.h</in>
+                  <in>platform_sflash_dct.h</in>
+                  <in>platform_sleep.h</in>
+                </df>
+                <df name="MCU">
+                  <df name="STM32F2xx">
+                    <df name="GCC">
+                      <df name="STM32F2x5">
+                      </df>
+                    </df>
+                    <df name="peripherals">
+                      <df name="libraries">
+                        <df name="inc">
+                          <in>misc.h</in>
+                          <in>stm32f2xx_adc.h</in>
+                          <in>stm32f2xx_can.h</in>
+                          <in>stm32f2xx_crc.h</in>
+                          <in>stm32f2xx_cryp.h</in>
+                          <in>stm32f2xx_dac.h</in>
+                          <in>stm32f2xx_dbgmcu.h</in>
+                          <in>stm32f2xx_dcmi.h</in>
+                          <in>stm32f2xx_dma.h</in>
+                          <in>stm32f2xx_exti.h</in>
+                          <in>stm32f2xx_flash.h</in>
+                          <in>stm32f2xx_fsmc.h</in>
+                          <in>stm32f2xx_gpio.h</in>
+                          <in>stm32f2xx_hash.h</in>
+                          <in>stm32f2xx_i2c.h</in>
+                          <in>stm32f2xx_iwdg.h</in>
+                          <in>stm32f2xx_pwr.h</in>
+                          <in>stm32f2xx_rcc.h</in>
+                          <in>stm32f2xx_rng.h</in>
+                          <in>stm32f2xx_rtc.h</in>
+                          <in>stm32f2xx_sdio.h</in>
+                          <in>stm32f2xx_spi.h</in>
+                          <in>stm32f2xx_syscfg.h</in>
+                          <in>stm32f2xx_tim.h</in>
+                          <in>stm32f2xx_usart.h</in>
+                          <in>stm32f2xx_wwdg.h</in>
+                        </df>
+                        <in>stm32f2xx.h</in>
+                        <in>stm32f2xx_conf.h</in>
+                        <in>system_stm32f2xx.h</in>
+                      </df>
+                      <in>platform_mcu_peripheral.h</in>
+                    </df>
+                    <df name="WAF">
+                      <in>waf_platform.h</in>
+                    </df>
+                    <in>platform_cmsis.h</in>
+                    <in>platform_isr_interface.h</in>
+                  </df>
+                  <in>platform_stdio.h</in>
+                  <in>wiced_apps_common.h</in>
+                  <in>wiced_dct_common.h</in>
+                  <in>wiced_waf_common.h</in>
+                  <in>wwd_platform_common.h</in>
+                </df>
+              </df>
+              <df name="RTOS">
+                <df name="FreeRTOS">
+                  <df name="ver7.5.2">
+                    <df name="License">
+                    </df>
+                    <df name="Source">
+                      <df name="include">
+                        <in>FreeRTOS.h</in>
+                        <in>StackMacros.h</in>
+                        <in>croutine.h</in>
+                        <in>list.h</in>
+                        <in>mpu_wrappers.h</in>
+                        <in>portable.h</in>
+                        <in>projdefs.h</in>
+                        <in>queue.h</in>
+                        <in>semphr.h</in>
+                        <in>task.h</in>
+                        <in>timers.h</in>
+                      </df>
+                      <df name="portable">
+                        <df name="GCC">
+                          <df name="ARM_CM3">
+                            <in>portmacro.h</in>
+                          </df>
+                        </df>
+                      </df>
+                    </df>
+                  </df>
+                  <df name="WICED">
+                    <in>rtos.h</in>
+                  </df>
+                  <df name="WWD">
+                    <df name="ARM_CM3">
+                      <in>FreeRTOSConfig.h</in>
+                    </df>
+                    <in>wwd_FreeRTOS_systick.h</in>
+                    <in>wwd_rtos.h</in>
+                  </df>
+                </df>
+                <df name="ThreadX">
+                  <df name="ver5.6">
+                    <df name="Cortex_M3_M4">
+                      <df name="GCC">
+                        <in>tx_port.h</in>
+                      </df>
+                    </df>
+                    <in>tx_api.h</in>
+                    <in>tx_block_pool.h</in>
+                    <in>tx_byte_pool.h</in>
+                    <in>tx_event_flags.h</in>
+                    <in>tx_initialize.h</in>
+                    <in>tx_low_power.h</in>
+                    <in>tx_mutex.h</in>
+                    <in>tx_queue.h</in>
+                    <in>tx_semaphore.h</in>
+                    <in>tx_thread.h</in>
+                    <in>tx_timer.h</in>
+                    <in>tx_trace.h</in>
+                    <in>tx_user.h</in>
+                  </df>
+                  <df name="WICED">
+                    <in>rtos.h</in>
+                  </df>
+                  <df name="WWD">
+                    <in>wwd_rtos.h</in>
+                  </df>
+                </df>
+              </df>
+              <df name="security">
+                <df name="BESL">
+                  <df name="crypto">
+                    <in>crypto_constants.h</in>
+                    <in>crypto_structures.h</in>
+                  </df>
+                  <df name="host">
+                    <df name="WICED">
+                      <in>besl_host.h</in>
+                      <in>cipher_suites.h</in>
+                      <in>tls_types.h</in>
+                      <in>wiced_p2p.h</in>
+                      <in>wiced_tls.h</in>
+                      <in>wiced_wps.h</in>
+                      <in>wps_host.h</in>
+                    </df>
+                  </df>
+                  <df name="include">
+                    <in>besl_host_interface.h</in>
+                    <in>besl_structures.h</in>
+                    <in>p2p_host_interface.h</in>
+                    <in>scan_host_interface.h</in>
+                    <in>wps_host_interface.h</in>
+                    <in>wps_p2p_interface.h</in>
+                  </df>
+                  <df name="P2P">
+                    <in>p2p_constants.h</in>
+                    <in>p2p_structures.h</in>
+                  </df>
+                  <df name="TLS">
+                    <in>tls_host_api.h</in>
+                  </df>
+                  <df name="WPS">
+                    <in>wps_common.h</in>
+                    <in>wps_constants.h</in>
+                    <in>wps_structures.h</in>
+                  </df>
+                </df>
+              </df>
+              <df name="WWD">
+                <df name="include">
+                  <df name="network">
+                    <in>wwd_buffer_interface.h</in>
+                    <in>wwd_network_constants.h</in>
+                    <in>wwd_network_interface.h</in>
+                  </df>
+                  <df name="platform">
+                    <in>wwd_bus_interface.h</in>
+                    <in>wwd_platform_interface.h</in>
+                    <in>wwd_resource_interface.h</in>
+                    <in>wwd_sdio_interface.h</in>
+                    <in>wwd_spi_interface.h</in>
+                  </df>
+                  <df name="RTOS">
+                    <in>wwd_rtos_interface.h</in>
+                  </df>
+                  <in>wwd_assert.h</in>
+                  <in>wwd_constants.h</in>
+                  <in>wwd_crypto.h</in>
+                  <in>wwd_debug.h</in>
+                  <in>wwd_events.h</in>
+                  <in>wwd_management.h</in>
+                  <in>wwd_poll.h</in>
+                  <in>wwd_structures.h</in>
+                  <in>wwd_wifi.h</in>
+                  <in>wwd_wlioctl.h</in>
+                </df>
+                <df name="internal">
+                  <df name="bus_protocols">
+                    <df name="SDIO">
+                      <in>wwd_bus_protocol.h</in>
+                    </df>
+                    <in>wwd_bus_protocol_interface.h</in>
+                  </df>
+                  <df name="chips">
+                    <df name="43362A2">
+                      <in>chip_constants.h</in>
+                    </df>
+                  </df>
+                  <in>wwd_ap.h</in>
+                  <in>wwd_bcmendian.h</in>
+                  <in>wwd_internal.h</in>
+                  <in>wwd_logging.h</in>
+                  <in>wwd_sdpcm.h</in>
+                  <in>wwd_thread.h</in>
+                </df>
+              </df>
+            </df>
+            <in>concurrent_hal.cpp</in>
+            <in>core_hal.c</in>
+            <in>core_subsys_hal.c</in>
+            <in>dct_hal.h</in>
+            <in>delay_hal.c</in>
+            <in>hal_dynalib_export.c</in>
+            <in>inet_hal.cpp</in>
+            <in>memory_hal.cpp</in>
+            <in>newlib_stubs.cpp</in>
+            <in>ota_flash_hal.cpp</in>
+            <in>product_store_hal.c</in>
+            <in>resources.c</in>
+            <in>socket_hal.cpp</in>
+            <in>socket_internal.h</in>
+            <in>softap.cpp</in>
+            <in>softap.h</in>
+            <in>softap_ip.c</in>
+            <in>system_interrupts.cpp</in>
+            <in>tls_stub.c</in>
+            <in>usbd_desc_device.h</in>
+            <in>watchdog_hal.c</in>
+            <in>wlan_hal.cpp</in>
+            <in>wlan_internal.h</in>
+            <in>wlan_scan.h</in>
+          </df>
+          <df name="stm32f2xx">
+            <in>adc_hal.c</in>
+            <in>bootloader.cpp</in>
+            <in>bootloader.h</in>
+            <in>bootloader_platform_6.c</in>
+            <in>bootloader_platform_8.c</in>
+            <in>core_hal_stm32f2xx.c</in>
+            <in>core_hal_stm32f2xx.h</in>
+            <in>dac_hal.c</in>
+            <in>delay_hal_stm32f2xx.c</in>
+            <in>deviceid_hal.cpp</in>
+            <in>eeprom_hal.c</in>
+            <in>gpio_hal.c</in>
+            <in>i2c_hal.c</in>
+            <in>interrupts_hal.c</in>
+            <in>interrupts_impl.h</in>
+            <in>pinmap_hal.c</in>
+            <in>pinmap_impl.h</in>
+            <in>platform_headers.h</in>
+            <in>pwm_hal.c</in>
+            <in>rng_hal.c</in>
+            <in>rtc_hal.c</in>
+            <in>servo_hal.c</in>
+            <in>spi_hal.c</in>
+            <in>syshealth_hal.c</in>
+            <in>timer_hal.c</in>
+            <in>tone_hal.c</in>
+            <in>usart_hal.c</in>
+            <in>usb_hal.c</in>
+            <in>usbd_desc_stm32f2xx.c</in>
+          </df>
+          <df name="template">
+            <in>adc_hal.c</in>
+            <in>core_hal.c</in>
+            <in>core_subsys_hal.c</in>
+            <in>dac_hal.c</in>
+            <in>delay_hal.c</in>
+            <in>deviceid_hal.cpp</in>
+            <in>eeprom_hal.c</in>
+            <in>gpio_hal.c</in>
+            <in>i2c_hal.c</in>
+            <in>inet_hal.c</in>
+            <in>interrupts_hal.c</in>
+            <in>memory_hal.cpp</in>
+            <in>ota_flash_hal.c</in>
+            <in>pinmap_hal.c</in>
+            <in>platform_headers.h</in>
+            <in>product_store_hal.c</in>
+            <in>pwm_hal.c</in>
+            <in>rng_hal.c</in>
+            <in>rtc_hal.c</in>
+            <in>servo_hal.c</in>
+            <in>socket_hal.c</in>
+            <in>spi_hal.c</in>
+            <in>timer_hal.c</in>
+            <in>tone_hal.c</in>
+            <in>usart_hal.c</in>
+            <in>usb_hal.c</in>
+            <in>wlan_hal.c</in>
+          </df>
+        </df>
+      </df>
+      <df name="hal-dynalib">
+        <df name="src">
+          <in>hal_core.c</in>
+          <in>hal_dynalib.c</in>
+          <in>hal_gpio.c</in>
+          <in>hal_i2c.c</in>
+          <in>hal_peripherals.c</in>
+          <in>hal_socket.c</in>
+          <in>hal_spi.c</in>
+          <in>hal_usart.c</in>
+          <in>hal_wlan.c</in>
+        </df>
+      </df>
+      <df name="main">
+        <df name="src">
+          <in>module_info.c</in>
+        </df>
+      </df>
+      <df name="misc">
+        <df name="appnotes">
+        </df>
+        <df name="driver">
+          <df name="windows">
+          </df>
+        </df>
+      </df>
+      <df name="modules">
+        <df name="photon">
+          <df name="system-part1">
+            <df name="inc">
+              <in>module_system_part1.h</in>
+              <in>module_system_part1_init.h</in>
+              <in>module_system_part1_init_dynalib.h</in>
+              <in>wiced_stubs.h</in>
+              <in>wifi_dynalib.h</in>
+            </df>
+            <df name="src">
+              <in>import_rt.c</in>
+              <in>init_dynalib.c</in>
+              <in>module_info.c</in>
+              <in>module_system_part1.c</in>
+              <in>wiced_stubs.c</in>
+              <in>wifi_dynalib.c</in>
+            </df>
+          </df>
+          <df name="system-part2">
+            <df name="inc">
+              <in>module_system_part2.h</in>
+            </df>
+            <df name="src">
+              <in>export_rt.c</in>
+              <in>export_system.cpp</in>
+              <in>import_part1.c</in>
+              <in>import_user.c</in>
+              <in>import_wifi_resources.c</in>
+              <in>module_info.c</in>
+              <in>module_system_part2.c</in>
+            </df>
+          </df>
+          <df name="user-part">
+            <df name="inc">
+              <in>module_user_init.h</in>
+              <in>user_dynalib.h</in>
+            </df>
+            <df name="src">
+              <in>module_info.c</in>
+              <in>newlib_stubs.cpp</in>
+              <in>user_export.c</in>
+              <in>user_module.c</in>
+            </df>
+          </df>
+        </df>
+      </df>
+      <df name="platform">
+        <df name="MCU">
+          <df name="gcc">
+            <df name="src">
+              <in>hw_config.c</in>
+            </df>
+          </df>
+          <df name="newhal-mcu">
+            <df name="inc">
+              <in>flash_mal.h</in>
+              <in>hw_config.h</in>
+            </df>
+            <df name="src">
+              <in>hw_config.c</in>
+            </df>
+          </df>
+          <df name="STM32F1xx">
+            <df name="CMSIS">
+              <df name="Device">
+                <df name="ST">
+                  <df name="Include">
+                    <in>stm32f10x.h</in>
+                    <in>system_stm32f10x.h</in>
+                  </df>
+                </df>
+              </df>
+              <df name="Include">
+                <in>arm_common_tables.h</in>
+                <in>arm_math.h</in>
+                <in>core_cm3.h</in>
+                <in>core_cmFunc.h</in>
+                <in>core_cmInstr.h</in>
+              </df>
+            </df>
+            <df name="SPARK_Firmware_Driver">
+              <df name="inc">
+                <in>cc3000_spi.h</in>
+                <in>hw_config.h</in>
+                <in>platform_config.h</in>
+                <in>spi.h</in>
+                <in>spi_bus.h</in>
+                <in>sst25vf_spi.h</in>
+                <in>stm32_it.h</in>
+                <in>stm32f10x_conf.h</in>
+                <in>usb_conf.h</in>
+                <in>usb_desc.h</in>
+                <in>usb_istr.h</in>
+                <in>usb_prop.h</in>
+                <in>usb_pwr.h</in>
+              </df>
+              <df name="src">
+                <in>cc3000_spi.c</in>
+                <in>hw_config.c</in>
+                <in>spi_bus.c</in>
+                <in>sst25vf_spi.c</in>
+                <in>system_stm32f10x.c</in>
+                <in>usb_endp.c</in>
+                <in>usb_pwr.c</in>
+              </df>
+            </df>
+            <df name="STM32_StdPeriph_Driver">
+              <df name="inc">
+                <in>misc.h</in>
+                <in>stm32f10x_adc.h</in>
+                <in>stm32f10x_bkp.h</in>
+                <in>stm32f10x_can.h</in>
+                <in>stm32f10x_cec.h</in>
+                <in>stm32f10x_crc.h</in>
+                <in>stm32f10x_dac.h</in>
+                <in>stm32f10x_dbgmcu.h</in>
+                <in>stm32f10x_dma.h</in>
+                <in>stm32f10x_exti.h</in>
+                <in>stm32f10x_flash.h</in>
+                <in>stm32f10x_fsmc.h</in>
+                <in>stm32f10x_gpio.h</in>
+                <in>stm32f10x_i2c.h</in>
+                <in>stm32f10x_iwdg.h</in>
+                <in>stm32f10x_pwr.h</in>
+                <in>stm32f10x_rcc.h</in>
+                <in>stm32f10x_rtc.h</in>
+                <in>stm32f10x_sdio.h</in>
+                <in>stm32f10x_spi.h</in>
+                <in>stm32f10x_tim.h</in>
+                <in>stm32f10x_usart.h</in>
+                <in>stm32f10x_wwdg.h</in>
+              </df>
+              <df name="src">
+                <in>misc.c</in>
+                <in>stm32f10x_adc.c</in>
+                <in>stm32f10x_bkp.c</in>
+                <in>stm32f10x_can.c</in>
+                <in>stm32f10x_cec.c</in>
+                <in>stm32f10x_crc.c</in>
+                <in>stm32f10x_dac.c</in>
+                <in>stm32f10x_dbgmcu.c</in>
+                <in>stm32f10x_dma.c</in>
+                <in>stm32f10x_exti.c</in>
+                <in>stm32f10x_flash.c</in>
+                <in>stm32f10x_fsmc.c</in>
+                <in>stm32f10x_gpio.c</in>
+                <in>stm32f10x_i2c.c</in>
+                <in>stm32f10x_iwdg.c</in>
+                <in>stm32f10x_pwr.c</in>
+                <in>stm32f10x_rcc.c</in>
+                <in>stm32f10x_rtc.c</in>
+                <in>stm32f10x_sdio.c</in>
+                <in>stm32f10x_spi.c</in>
+                <in>stm32f10x_tim.c</in>
+                <in>stm32f10x_usart.c</in>
+                <in>stm32f10x_wwdg.c</in>
+              </df>
+            </df>
+            <df name="STM32_USB_Device_Driver">
+              <df name="inc">
+                <in>usb_core.h</in>
+                <in>usb_def.h</in>
+                <in>usb_init.h</in>
+                <in>usb_int.h</in>
+                <in>usb_lib.h</in>
+                <in>usb_mem.h</in>
+                <in>usb_regs.h</in>
+                <in>usb_sil.h</in>
+                <in>usb_type.h</in>
+              </df>
+              <df name="src">
+                <in>usb_core.c</in>
+                <in>usb_init.c</in>
+                <in>usb_int.c</in>
+                <in>usb_mem.c</in>
+                <in>usb_regs.c</in>
+                <in>usb_sil.c</in>
+              </df>
+            </df>
+          </df>
+          <df name="STM32F2xx">
+            <df name="CMSIS">
+              <df name="Device">
+                <df name="ST">
+                  <df name="Include">
+                    <in>stm32f2xx.h</in>
+                    <in>system_stm32f2xx.h</in>
+                  </df>
+                </df>
+              </df>
+              <df name="Include">
+                <in>arm_common_tables.h</in>
+                <in>arm_math.h</in>
+                <in>core_cm0.h</in>
+                <in>core_cm3.h</in>
+                <in>core_cm4.h</in>
+                <in>core_cm4_simd.h</in>
+                <in>core_cmFunc.h</in>
+                <in>core_cmInstr.h</in>
+              </df>
+            </df>
+            <df name="SPARK_Firmware_Driver">
+              <df name="inc">
+                <in>dct.h</in>
+                <in>flash_mal.h</in>
+                <in>hw_config.h</in>
+                <in>platform_config.h</in>
+                <in>platform_flash_modules.h</in>
+                <in>platform_system_flags.h</in>
+                <in>spi_flash.h</in>
+                <in>stm32f2xx_conf.h</in>
+                <in>usb_conf.h</in>
+                <in>usbd_conf.h</in>
+                <in>usbd_desc.h</in>
+              </df>
+              <df name="src">
+                <in>flash_mal.c</in>
+                <in>hw_config.c</in>
+                <in>spi_flash.c</in>
+                <in>system_stm32f2xx.c</in>
+                <in>usb_bsp.c</in>
+                <in>usbd_usr.c</in>
+              </df>
+            </df>
+            <df name="STM32_StdPeriph_Driver">
+              <df name="inc">
+                <in>misc.h</in>
+                <in>stm32f2xx_adc.h</in>
+                <in>stm32f2xx_can.h</in>
+                <in>stm32f2xx_crc.h</in>
+                <in>stm32f2xx_cryp.h</in>
+                <in>stm32f2xx_dac.h</in>
+                <in>stm32f2xx_dbgmcu.h</in>
+                <in>stm32f2xx_dcmi.h</in>
+                <in>stm32f2xx_dma.h</in>
+                <in>stm32f2xx_exti.h</in>
+                <in>stm32f2xx_flash.h</in>
+                <in>stm32f2xx_fsmc.h</in>
+                <in>stm32f2xx_gpio.h</in>
+                <in>stm32f2xx_hash.h</in>
+                <in>stm32f2xx_i2c.h</in>
+                <in>stm32f2xx_iwdg.h</in>
+                <in>stm32f2xx_pwr.h</in>
+                <in>stm32f2xx_rcc.h</in>
+                <in>stm32f2xx_rng.h</in>
+                <in>stm32f2xx_rtc.h</in>
+                <in>stm32f2xx_sdio.h</in>
+                <in>stm32f2xx_spi.h</in>
+                <in>stm32f2xx_syscfg.h</in>
+                <in>stm32f2xx_tim.h</in>
+                <in>stm32f2xx_usart.h</in>
+                <in>stm32f2xx_wwdg.h</in>
+              </df>
+              <df name="src">
+                <in>misc.c</in>
+                <in>stm32f2xx_adc.c</in>
+                <in>stm32f2xx_can.c</in>
+                <in>stm32f2xx_crc.c</in>
+                <in>stm32f2xx_cryp.c</in>
+                <in>stm32f2xx_cryp_aes.c</in>
+                <in>stm32f2xx_cryp_des.c</in>
+                <in>stm32f2xx_cryp_tdes.c</in>
+                <in>stm32f2xx_dac.c</in>
+                <in>stm32f2xx_dbgmcu.c</in>
+                <in>stm32f2xx_dcmi.c</in>
+                <in>stm32f2xx_dma.c</in>
+                <in>stm32f2xx_exti.c</in>
+                <in>stm32f2xx_flash.c</in>
+                <in>stm32f2xx_fsmc.c</in>
+                <in>stm32f2xx_gpio.c</in>
+                <in>stm32f2xx_hash.c</in>
+                <in>stm32f2xx_hash_md5.c</in>
+                <in>stm32f2xx_hash_sha1.c</in>
+                <in>stm32f2xx_i2c.c</in>
+                <in>stm32f2xx_iwdg.c</in>
+                <in>stm32f2xx_pwr.c</in>
+                <in>stm32f2xx_rcc.c</in>
+                <in>stm32f2xx_rng.c</in>
+                <in>stm32f2xx_rtc.c</in>
+                <in>stm32f2xx_sdio.c</in>
+                <in>stm32f2xx_spi.c</in>
+                <in>stm32f2xx_syscfg.c</in>
+                <in>stm32f2xx_tim.c</in>
+                <in>stm32f2xx_usart.c</in>
+                <in>stm32f2xx_wwdg.c</in>
+              </df>
+            </df>
+            <df name="STM32_USB_Device_Driver">
+              <df name="inc">
+                <in>usbd_audio_core.h</in>
+                <in>usbd_audio_out_if.h</in>
+                <in>usbd_cdc_core.h</in>
+                <in>usbd_cdc_if_template.h</in>
+                <in>usbd_conf_template.h</in>
+                <in>usbd_core.h</in>
+                <in>usbd_dct_if.h</in>
+                <in>usbd_def.h</in>
+                <in>usbd_dfu_core.h</in>
+                <in>usbd_dfu_mal.h</in>
+                <in>usbd_flash_if.h</in>
+                <in>usbd_hid_core.h</in>
+                <in>usbd_ioreq.h</in>
+                <in>usbd_mem_if_template.h</in>
+                <in>usbd_msc_bot.h</in>
+                <in>usbd_msc_core.h</in>
+                <in>usbd_msc_data.h</in>
+                <in>usbd_msc_mem.h</in>
+                <in>usbd_msc_scsi.h</in>
+                <in>usbd_otp_if.h</in>
+                <in>usbd_req.h</in>
+                <in>usbd_sflash_if.h</in>
+                <in>usbd_usr.h</in>
+              </df>
+              <df name="src">
+                <in>usbd_audio_core.c</in>
+                <in>usbd_audio_out_if.c</in>
+                <in>usbd_cdc_core.c</in>
+                <in>usbd_cdc_if.c</in>
+                <in>usbd_cdc_if_template.c</in>
+                <in>usbd_core.c</in>
+                <in>usbd_dct_if.c</in>
+                <in>usbd_dfu_core.c</in>
+                <in>usbd_dfu_mal.c</in>
+                <in>usbd_flash_if.c</in>
+                <in>usbd_hid_core.c</in>
+                <in>usbd_ioreq.c</in>
+                <in>usbd_mem_if_template.c</in>
+                <in>usbd_msc_bot.c</in>
+                <in>usbd_msc_core.c</in>
+                <in>usbd_msc_data.c</in>
+                <in>usbd_msc_scsi.c</in>
+                <in>usbd_otp_if.c</in>
+                <in>usbd_req.c</in>
+                <in>usbd_sflash_if.c</in>
+                <in>usbd_storage_template.c</in>
+              </df>
+            </df>
+            <df name="STM32_USB_Host_Driver">
+              <df name="inc">
+                <in>usbh_conf_template.h</in>
+                <in>usbh_core.h</in>
+                <in>usbh_def.h</in>
+                <in>usbh_hcs.h</in>
+                <in>usbh_hid_core.h</in>
+                <in>usbh_hid_keybd.h</in>
+                <in>usbh_hid_mouse.h</in>
+                <in>usbh_ioreq.h</in>
+                <in>usbh_msc_bot.h</in>
+                <in>usbh_msc_core.h</in>
+                <in>usbh_msc_scsi.h</in>
+                <in>usbh_stdreq.h</in>
+              </df>
+              <df name="src">
+                <in>usbh_core.c</in>
+                <in>usbh_hcs.c</in>
+                <in>usbh_hid_core.c</in>
+                <in>usbh_hid_keybd.c</in>
+                <in>usbh_hid_mouse.c</in>
+                <in>usbh_ioreq.c</in>
+                <in>usbh_msc_bot.c</in>
+                <in>usbh_msc_core.c</in>
+                <in>usbh_msc_fatfs.c</in>
+                <in>usbh_msc_scsi.c</in>
+                <in>usbh_stdreq.c</in>
+              </df>
+            </df>
+            <df name="STM32_USB_OTG_Driver">
+              <df name="inc">
+                <in>usb_bsp.h</in>
+                <in>usb_conf_template.h</in>
+                <in>usb_core.h</in>
+                <in>usb_dcd.h</in>
+                <in>usb_dcd_int.h</in>
+                <in>usb_defines.h</in>
+                <in>usb_hcd.h</in>
+                <in>usb_hcd_int.h</in>
+                <in>usb_otg.h</in>
+                <in>usb_regs.h</in>
+              </df>
+              <df name="src">
+                <in>usb_bsp_template.c</in>
+                <in>usb_core.c</in>
+                <in>usb_dcd.c</in>
+                <in>usb_dcd_int.c</in>
+                <in>usb_hcd.c</in>
+                <in>usb_hcd_int.c</in>
+                <in>usb_otg.c</in>
+              </df>
+            </df>
+          </df>
+        </df>
+        <df name="NET">
+          <df name="CC3000">
+            <df name="CC3000_Host_Driver">
+              <in>cc3000_common.c</in>
+              <in>cc3000_common.h</in>
+              <in>data_types.h</in>
+              <in>evnt_handler.c</in>
+              <in>evnt_handler.h</in>
+              <in>hci.c</in>
+              <in>hci.h</in>
+              <in>host_driver_version.h</in>
+              <in>netapp.c</in>
+              <in>netapp.h</in>
+              <in>nvmem.c</in>
+              <in>nvmem.h</in>
+              <in>security.c</in>
+              <in>security.h</in>
+              <in>socket.c</in>
+              <in>socket.h</in>
+              <in>wlan.c</in>
+              <in>wlan.h</in>
+            </df>
+          </df>
+        </df>
+        <df name="shared">
+          <in>platforms.h</in>
+        </df>
+      </df>
+      <df name="rt-dynalib">
+        <df name="inc">
+          <in>rt_dynalib.h</in>
+        </df>
+        <df name="src">
+          <in>rt_dynalib.c</in>
+        </df>
+      </df>
+      <df name="services">
+        <df name="inc">
+          <in>appender.h</in>
+          <in>config.h</in>
+          <in>debug.h</in>
+          <in>jsmn.h</in>
+          <in>panic.h</in>
+          <in>panic_codes.h</in>
+          <in>rgbled.h</in>
+          <in>service_debug.h</in>
+          <in>services_dynalib.h</in>
+          <in>spark_macros.h</in>
+          <in>static_assert.h</in>
+        </df>
+        <df name="src">
+          <in>debug.c</in>
+          <in>jsmn.c</in>
+          <in>panic.c</in>
+          <in>rgbled.c</in>
+          <in>services_dynalib.c</in>
+        </df>
+      </df>
+      <df name="services-dynalib">
+        <df name="src">
+          <in>services_dynalib.c</in>
+        </df>
+      </df>
+      <df name="system">
+        <df name="inc">
+          <in>append_list.h</in>
+          <in>system_cloud.h</in>
+          <in>system_dynalib.h</in>
+          <in>system_dynalib_cloud.h</in>
+          <in>system_dynalib_net.h</in>
+          <in>system_event.h</in>
+          <in>system_mode.h</in>
+          <in>system_network.h</in>
+          <in>system_network_internal.h</in>
+          <in>system_sleep.h</in>
+          <in>system_task.h</in>
+          <in>system_update.h</in>
+          <in>system_user.h</in>
+          <in>system_ymodem.h</in>
+          <in>wifi_credentials_reader.h</in>
+          <in>wifitester.h</in>
+        </df>
+        <df name="src">
+          <in>main.cpp</in>
+          <in>system_cloud.cpp</in>
+          <in>system_event.cpp</in>
+          <in>system_mode.cpp</in>
+          <in>system_network.cpp</in>
+          <in>system_sleep.cpp</in>
+          <in>system_task.cpp</in>
+          <in>system_update.cpp</in>
+          <in>system_ymodem.cpp</in>
+          <in>wifi_credentials_reader.cpp</in>
+          <in>wifitester.cpp</in>
+        </df>
+      </df>
+      <df name="system-dynalib">
+        <df name="src">
+          <in>system_dynalib.c</in>
+          <in>system_dynalib_cloud.c</in>
+          <in>system_dynalib_net.c</in>
+        </df>
+      </df>
+      <df name="user">
+        <df name="applications">
+          <df name="antselect">
+            <in>application.cpp</in>
+          </df>
+          <df name="blank">
+            <in>blank.cpp</in>
+          </df>
+          <df name="serialbridge">
+            <in>bridge.cpp</in>
+          </df>
+          <df name="tinker">
+            <in>application.cpp</in>
+          </df>
+          <df name="unlocker">
+            <in>unlocker.cpp</in>
+          </df>
+          <df name="wifitester">
+            <in>wifitester.cpp</in>
+          </df>
+        </df>
+        <df name="inc">
+          <in>application.h</in>
+          <in>particle_version.h</in>
+        </df>
+        <df name="libraries">
+          <df name="Serial2">
+            <in>Serial2.h</in>
+          </df>
+          <df name="Ymodem">
+            <in>Ymodem.h</in>
+          </df>
+        </df>
+        <df name="src">
+          <in>application.cpp</in>
+        </df>
+        <df name="tests">
+          <df name="bootloader">
+            <in>application.cpp</in>
+            <in>flashupdate.cpp</in>
+          </df>
+          <df name="libraries">
+            <df name="unit-test">
+              <in>FakeStream.cpp</in>
+              <in>FakeStream.h</in>
+              <in>FakeStreamBuffer.cpp</in>
+              <in>FakeStreamBuffer.h</in>
+              <in>SparkParty.cpp</in>
+              <in>flashee-eeprom-impl.h</in>
+              <in>flashee-eeprom.cpp</in>
+              <in>flashee-eeprom.h</in>
+              <in>unit-test.cpp</in>
+              <in>unit-test.h</in>
+            </df>
+          </df>
+          <df name="reflection">
+          </df>
+          <df name="unit">
+            <in>catch.cpp</in>
+            <in>catch.hpp</in>
+            <in>character.cpp</in>
+            <in>ipaddress.cpp</in>
+            <in>main.cpp</in>
+            <in>random.cpp</in>
+            <in>rgbled.cpp</in>
+            <in>std_functions.cpp</in>
+            <in>string.cpp</in>
+            <in>system_task.cpp</in>
+          </df>
+          <df name="wiring">
+            <df name="adc_dac">
+              <in>adc_dac.cpp</in>
+              <in>application.cpp</in>
+            </df>
+            <df name="api">
+              <in>application.cpp</in>
+              <in>cloud.cpp</in>
+              <in>eeprom.cpp</in>
+              <in>network.cpp</in>
+              <in>platform.cpp</in>
+              <in>system.cpp</in>
+              <in>testapi.h</in>
+              <in>timedelay.cpp</in>
+              <in>wifi.cpp</in>
+              <in>wiring.cpp</in>
+            </df>
+            <df name="cloud">
+              <in>application.cpp</in>
+              <in>cloud.cpp</in>
+            </df>
+            <df name="i2c_master_slave">
+              <in>application.cpp</in>
+              <in>i2c_master_slave.cpp</in>
+            </df>
+            <df name="i2c_shield">
+              <in>application.cpp</in>
+              <in>i2c_psensor.cpp</in>
+            </df>
+            <df name="networking">
+              <in>application.cpp</in>
+              <in>udp_ntp_client.cpp</in>
+            </df>
+            <df name="no_fixture">
+              <in>application.cpp</in>
+              <in>eeprom.cpp</in>
+              <in>gpio.cpp</in>
+              <in>led.cpp</in>
+              <in>pwm.cpp</in>
+              <in>random.cpp</in>
+              <in>servo.cpp</in>
+              <in>string.cpp</in>
+              <in>time.cpp</in>
+              <in>tone.cpp</in>
+            </df>
+            <df name="serial_loopback">
+              <in>application.cpp</in>
+              <in>serial.cpp</in>
+            </df>
+            <df name="spi_shield">
+              <in>application.cpp</in>
+              <in>spi_fram.cpp</in>
+            </df>
+            <df name="system">
+              <in>application.cpp</in>
+              <in>constructor.cpp</in>
+            </df>
+            <df name="wifi">
+              <in>application.cpp</in>
+              <in>wlan.cpp</in>
+            </df>
+          </df>
+        </df>
+      </df>
+      <df name="wiring">
+        <df name="inc">
+          <in>fast_pin.h</in>
+          <in>spark_disable_cloud.h</in>
+          <in>spark_disable_wlan.h</in>
+          <in>spark_wiring.h</in>
+          <in>spark_wiring_character.h</in>
+          <in>spark_wiring_client.h</in>
+          <in>spark_wiring_cloud.h</in>
+          <in>spark_wiring_constants.h</in>
+          <in>spark_wiring_eeprom.h</in>
+          <in>spark_wiring_i2c.h</in>
+          <in>spark_wiring_interrupts.h</in>
+          <in>spark_wiring_ipaddress.h</in>
+          <in>spark_wiring_network.h</in>
+          <in>spark_wiring_platform.h</in>
+          <in>spark_wiring_print.h</in>
+          <in>spark_wiring_printable.h</in>
+          <in>spark_wiring_random.h</in>
+          <in>spark_wiring_rgb.h</in>
+          <in>spark_wiring_servo.h</in>
+          <in>spark_wiring_spi.h</in>
+          <in>spark_wiring_stream.h</in>
+          <in>spark_wiring_string.h</in>
+          <in>spark_wiring_system.h</in>
+          <in>spark_wiring_tcpclient.h</in>
+          <in>spark_wiring_tcpserver.h</in>
+          <in>spark_wiring_thread.h</in>
+          <in>spark_wiring_ticks.h</in>
+          <in>spark_wiring_time.h</in>
+          <in>spark_wiring_tone.h</in>
+          <in>spark_wiring_udp.h</in>
+          <in>spark_wiring_usartserial.h</in>
+          <in>spark_wiring_usbkeyboard.h</in>
+          <in>spark_wiring_usbmouse.h</in>
+          <in>spark_wiring_usbserial.h</in>
+          <in>spark_wiring_version.h</in>
+          <in>spark_wiring_wifi.h</in>
+          <in>string_convert.h</in>
+        </df>
+        <df name="src">
+          <in>spark_wiring.cpp</in>
+          <in>spark_wiring_cloud.cpp</in>
+          <in>spark_wiring_eeprom.cpp</in>
+          <in>spark_wiring_i2c.cpp</in>
+          <in>spark_wiring_interrupts.cpp</in>
+          <in>spark_wiring_ipaddress.cpp</in>
+          <in>spark_wiring_print.cpp</in>
+          <in>spark_wiring_random.cpp</in>
+          <in>spark_wiring_rgb.cpp</in>
+          <in>spark_wiring_servo.cpp</in>
+          <in>spark_wiring_spi.cpp</in>
+          <in>spark_wiring_stream.cpp</in>
+          <in>spark_wiring_string.cpp</in>
+          <in>spark_wiring_system.cpp</in>
+          <in>spark_wiring_tcpclient.cpp</in>
+          <in>spark_wiring_tcpserver.cpp</in>
+          <in>spark_wiring_thread.cpp</in>
+          <in>spark_wiring_time.cpp</in>
+          <in>spark_wiring_tone.cpp</in>
+          <in>spark_wiring_udp.cpp</in>
+          <in>spark_wiring_usartserial.cpp</in>
+          <in>spark_wiring_usbkeyboard.cpp</in>
+          <in>spark_wiring_usbmouse.cpp</in>
+          <in>spark_wiring_usbserial.cpp</in>
+          <in>spark_wiring_wifi.cpp</in>
+          <in>string_convert.cpp</in>
+          <in>user.cpp</in>
+        </df>
+      </df>
+    </df>
+  </logicalFolder>
+  <projectmakefile>../../firmware/main/makefile</projectmakefile>
+  <confs>
+    <conf name="Core" type="0">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <platform>3</platform>
+      </toolsSet>
+      <compile>
+        <compiledirpicklist>
+          <compiledirpicklistitem>.</compiledirpicklistitem>
+          <compiledirpicklistitem>${AUTO_FOLDER}</compiledirpicklistitem>
+        </compiledirpicklist>
+        <compiledir>${AUTO_FOLDER}</compiledir>
+        <compilecommandpicklist>
+          <compilecommandpicklistitem>${MAKE} ${ITEM_NAME}.o</compilecommandpicklistitem>
+          <compilecommandpicklistitem>${AUTO_COMPILE}</compilecommandpicklistitem>
+        </compilecommandpicklist>
+        <compilecommand>${AUTO_COMPILE}</compilecommand>
+      </compile>
+      <dbx_gdbdebugger version="1">
+        <gdb_pathmaps>
+        </gdb_pathmaps>
+        <gdb_interceptlist>
+          <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
+        </gdb_interceptlist>
+        <gdb_options>
+          <DebugOptions>
+          </DebugOptions>
+        </gdb_options>
+        <gdb_buildfirst gdb_buildfirst_overriden="false" gdb_buildfirst_old="false"/>
+      </dbx_gdbdebugger>
+      <nativedebugger version="1">
+        <engine>gdb</engine>
+      </nativedebugger>
+      <runprofile version="9">
+        <runcommandpicklist>
+          <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
+          <runcommandpicklistitem>${MAKE} -f makefile PLATFORM=core</runcommandpicklistitem>
+          <runcommandpicklistitem>${MAKE} -f makefile PLATFORM=core program-dfu</runcommandpicklistitem>
+        </runcommandpicklist>
+        <runcommand>${MAKE} -f makefile PLATFORM=core program-dfu</runcommand>
+        <rundir>../../firmware/main</rundir>
+        <buildfirst>false</buildfirst>
+        <terminal-type>0</terminal-type>
+        <remove-instrumentation>0</remove-instrumentation>
+        <environment>
+        </environment>
+      </runprofile>
+    </conf>
+    <conf name="Photon" type="0">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <platform>3</platform>
+      </toolsSet>
+      <compile>
+        <compiledirpicklist>
+          <compiledirpicklistitem>.</compiledirpicklistitem>
+          <compiledirpicklistitem>${AUTO_FOLDER}</compiledirpicklistitem>
+        </compiledirpicklist>
+        <compiledir>${AUTO_FOLDER}</compiledir>
+        <compilecommandpicklist>
+          <compilecommandpicklistitem>${MAKE} ${ITEM_NAME}.o</compilecommandpicklistitem>
+          <compilecommandpicklistitem>${AUTO_COMPILE}</compilecommandpicklistitem>
+        </compilecommandpicklist>
+        <compilecommand>${AUTO_COMPILE}</compilecommand>
+      </compile>
+      <dbx_gdbdebugger version="1">
+        <gdb_pathmaps>
+        </gdb_pathmaps>
+        <gdb_interceptlist>
+          <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
+        </gdb_interceptlist>
+        <gdb_options>
+          <DebugOptions>
+          </DebugOptions>
+        </gdb_options>
+        <gdb_buildfirst gdb_buildfirst_overriden="false" gdb_buildfirst_old="false"/>
+      </dbx_gdbdebugger>
+      <nativedebugger version="1">
+        <engine>gdb</engine>
+      </nativedebugger>
+      <runprofile version="9">
+        <runcommandpicklist>
+          <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
+          <runcommandpicklistitem>${MAKE} -f makefile PLATFORM=photon program-dfu</runcommandpicklistitem>
+        </runcommandpicklist>
+        <runcommand>${MAKE} -f makefile PLATFORM=photon program-dfu</runcommand>
+        <rundir>../../firmware/main</rundir>
+        <buildfirst>false</buildfirst>
+        <terminal-type>0</terminal-type>
+        <remove-instrumentation>0</remove-instrumentation>
+        <environment>
+        </environment>
+      </runprofile>
+    </conf>
+  </confs>
+</configurationDescriptor>
