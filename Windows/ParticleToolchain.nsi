@@ -85,7 +85,7 @@ Name "Particle Toolchain"
 !define StrReplace '!insertmacro "_StrReplaceConstructor"'
 
 
-!define JSON_ADDRESS "https://gist.githubusercontent.com/mumblepins/bfcd148d7f4d470d6f20/raw"
+!define JSON_ADDRESS "https://raw.githubusercontent.com/mumblepins/ParticleToolchainInstaller/master/sources.json"
 ShowInstDetails show
 
 ; The file to write

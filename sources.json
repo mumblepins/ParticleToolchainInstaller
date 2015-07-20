@@ -1,0 +1,65 @@
+{
+  "GCC": {
+    "url": "https://launchpad.net/gcc-arm-embedded/4.9/4.9-2015-q2-update/+download/gcc-arm-none-eabi-4_9-2015q2-20150609-win32.zip",
+    "ver": "4.9.3.2"
+  },
+  "MAKE_BIN": {
+    "url-sf": "http://sourceforge.net/projects/gnuwin32/files/make/3.81/make-3.81-bin.zip/download",
+    "url": "http://www.mirrorservice.org/sites/ftp.sourceforge.net/pub/sourceforge/g/gn/gnuwin32/make/3.81/make-3.81-bin.zip",
+    "ver": "3.81"
+  },
+  "MAKE_DEP": {
+    "url-sf": "http://sourceforge.net/projects/gnuwin32/files/make/3.81/make-3.81-dep.zip/download",
+    "url": "http://www.mirrorservice.org/sites/ftp.sourceforge.net/pub/sourceforge/g/gn/gnuwin32/make/3.81/make-3.81-dep.zip",
+    "ver": "3.81"
+  },
+  "MINGW": {
+    "url-sf": "http://sourceforge.net/projects/mingw/files/Installer/mingw-get/mingw-get-0.6.2-beta-20131004-1/mingw-get-0.6.2-mingw32-beta-20131004-1-bin.zip/download",
+    "url": "http://www.mirrorservice.org/sites/ftp.sourceforge.net/pub/sourceforge/m/mi/mingw/Installer/mingw-get/mingw-get-0.6.2-beta-20131004-1/mingw-get-0.6.2-mingw32-beta-20131004-1-bin.zip",
+    "ver": "0.6.2"
+  },
+  "GIT": {
+    "url": "https://github.com/msysgit/msysgit/releases/download/Git-1.9.5-preview20150319/Git-1.9.5-preview20150319.exe",
+    "ver": "1.9.5"
+  },
+  "NETBEANS": {
+    "url": "http://download.netbeans.org/netbeans/8.0.2/final/bundles/netbeans-8.0.2-cpp-windows.exe",
+    "ver": "8.0.2"
+  },
+  "CYGWIN_X86": {
+    "url": "https://cygwin.com/setup-x86.exe",
+    "ver": "2.1.0"
+  },
+  "CYGWIN_X86_64": {
+    "url": "https://cygwin.com/setup-x86_64.exe",
+    "ver": "2.1.0"
+  },
+  "JDK": {
+    "url": "http://download.oracle.com/otn-pub/java/jdk/8u51-b16/jdk-8u51-windows-i586.exe",
+    "ver": "1.8.0.51"
+  },
+  "JDK64": {
+    "url": "http://download.oracle.com/otn-pub/java/jdk/8u51-b16/jdk-8u51-windows-i586.exe",
+    "ver": "1.8.0.51"
+  },
+  "NODEJS": {
+    "url": "https://nodejs.org/dist/v0.12.7/node-v0.12.7-x86.msi",
+    "ver": "0.12.7"
+  },
+  "NODEJS_64": {
+    "url": "https://nodejs.org/dist/v0.12.7/x64/node-v0.12.7-x64.msi",
+    "ver": "0.12.7"
+  },
+  "MS_BUILD": {
+    "url": "http://download.microsoft.com/download/9/B/B/9BB1309E-1A8F-4A47-A6C5-ECF76672A3B3/BuildTools_Full.exe",
+    "ver": "2013"
+  },
+  "PYTHON": {
+    "url": "https://www.python.org/ftp/python/2.7.10/python-2.7.10.msi",
+    "ver": "2.7.10"
+  },
+  "PYTHON64": {
+    "url": "https://www.python.org/ftp/python/2.7.10/python-2.7.10.amd64.msi",
+    "ver": "2.7.10"
+  }
+}
