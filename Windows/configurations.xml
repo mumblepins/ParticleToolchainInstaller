@@ -147,9 +147,9 @@
       </codeAssistance>
       <makefileType>
         <makeTool>
-          <buildCommandWorkingDir>../../firmware/main</buildCommandWorkingDir>
-          <buildCommand>${MAKE} -f makefile PLATFORM=core</buildCommand>
-          <cleanCommand>${MAKE} -f makefile clean PLATFORM=core</cleanCommand>
+          <buildCommandWorkingDir>../../firmware</buildCommandWorkingDir>
+          <buildCommand>${MAKE} PLATFORM=core</buildCommand>
+          <cleanCommand>${MAKE} clean PLATFORM=core</cleanCommand>
           <executablePath>../../firmware/build/target/main/platform-0-lto/main.bin</executablePath>
         </makeTool>
       </makefileType>
@@ -1329,9 +1329,9 @@
       </codeAssistance>
       <makefileType>
         <makeTool>
-          <buildCommandWorkingDir>../../firmware/main</buildCommandWorkingDir>
-          <buildCommand>${MAKE} -f makefile PLATFORM=photon</buildCommand>
-          <cleanCommand>${MAKE} -f makefile clean PLATFORM=photon</cleanCommand>
+          <buildCommandWorkingDir>../../firmware</buildCommandWorkingDir>
+          <buildCommand>${MAKE} PLATFORM=photon</buildCommand>
+          <cleanCommand>${MAKE} clean PLATFORM=photon</cleanCommand>
           <executablePath>../../firmware/build/target/user-part/platform-6-m/user-part.bin</executablePath>
         </makeTool>
       </makefileType>

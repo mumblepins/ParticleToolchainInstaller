@@ -1,27 +1,20 @@
-; example2.nsi
-;
-; This script is based on example1.nsi, but it remember the directory,
-; has uninstall support and (optionally) installs start menu shortcuts.
-;
-; It will install example2.nsi into a directory that the user selects,
-
-;--------------------------------
-
-
-
+!include MUI2.nsh
 SetCompressor /solid lzma
 
+!define PRODUCT_NAME "Particle Toolchain Installer"
+!define SHORT_NAME "ParticleToolchainInstaller"
+
+
 ; The name of the installer
-Name "Particle Toolchain"
+Name "${PRODUCT_NAME}"
 !include 'LogicLib.nsh'
 !include 'Sections.nsh'
 !include 'TextFunc.nsh'
-!include "DotNetChecker.nsh"
-!define PRODUCT_NAME "Particle Toolchain"
+;~ !include "DotNetChecker.nsh"
 !include 'x64.nsh'
 !insertmacro VersionCompare
 !insertmacro ConfigWrite
-!define REG_PATH "Software\ParticleToolchain"
+!define REG_PATH "Software\${SHORT_NAME}"
 
 ;FileExists is already part of LogicLib, but returns true for directories as well as files
 !macro _FileExists2 _a _b _t _f
@@ -84,18 +77,21 @@ Name "Particle Toolchain"
  
 !define StrReplace '!insertmacro "_StrReplaceConstructor"'
 
-
-!define JSON_ADDRESS "https://raw.githubusercontent.com/mumblepins/ParticleToolchainInstaller/master/sources.json"
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+!define JSON_ADDRESS "http://chip.dansull.com/sources.json"
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ShowInstDetails show
 
 ; The file to write
-OutFile "ParticleToolchain.exe"
+OutFile "${SHORT_NAME}.exe"
 
 XPStyle on
 InstallColors /windows
 
 ; The default installation directory
 Function .onInit
+
+	; The default installation directory
     StrCpy "$INSTDIR" "$WINDIR" 2
     StrCpy "$INSTDIR" "$INSTDIR\Particle"
     
@@ -112,11 +108,6 @@ Function .onInit
     Var /GLOBAL JDK64_ADDRESS
     Var /GLOBAL CYGWIN_ADDR
     Var /GLOBAL CYGWIN64_ADDR
-    Var /GLOBAL NODE_ADDR
-    Var /GLOBAL NODE64_ADDR
-    Var /GLOBAL PYTHON_ADDR
-    Var /GLOBAL PYTHON64_ADDR
-    Var /GLOBAL MSBUILD_ADDR
     
     Var /GLOBAL GCC_ARM_VER
     Var /GLOBAL MAKE_BINARY_VER
@@ -128,11 +119,6 @@ Function .onInit
     Var /GLOBAL JDK64_VER
     Var /GLOBAL CYGWIN_VER
     Var /GLOBAL CYGWIN64_VER
-    Var /GLOBAL NODE_VER
-    Var /GLOBAL NODE64_VER
-    Var /GLOBAL PYTHON_VER
-    Var /GLOBAL PYTHON64_VER
-    Var /GLOBAL MSBUILD_VER
     
     StrCpy "$TempFile" "$TEMP\release_info.json"
     inetc::get /QUESTION "" /BANNER "Downloading Installation Info"  /CAPTION "Downloading..." /RESUME "" "${JSON_ADDRESS}" "$TempFile" /END
@@ -207,41 +193,7 @@ Function .onInit
         StrCpy "$CYGWIN64_ADDR" "$R0"
     ${EndIf}
     
-    ClearErrors
-    nsJSON::Get /noexpand `NODEJS` `url` /end
-    ${IfNot} ${Errors}
-        Pop $R0
-        StrCpy "$NODE_ADDR" "$R0"
-    ${EndIf}
-    
-    ClearErrors
-    nsJSON::Get /noexpand `NODEJS_64` `url` /end
-    ${IfNot} ${Errors}
-        Pop $R0
-        StrCpy "$NODE64_ADDR" "$R0"
-    ${EndIf}
-    
-    ClearErrors
-    nsJSON::Get /noexpand `PYTHON` `url` /end
-    ${IfNot} ${Errors}
-        Pop $R0
-        StrCpy "$PYTHON_ADDR" "$R0"
-    ${EndIf}
-    
-    ClearErrors
-    nsJSON::Get /noexpand `PYTHON64` `url` /end
-    ${IfNot} ${Errors}
-        Pop $R0
-        StrCpy "$PYTHON64_ADDR" "$R0"
-    ${EndIf}
-    
-    ClearErrors
-    nsJSON::Get /noexpand `MS_BUILD` `url` /end
-    ${IfNot} ${Errors}
-        Pop $R0
-        StrCpy "$MSBUILD_ADDR" "$R0"
-    ${EndIf}
-    
+   
     
     
     
@@ -315,41 +267,6 @@ Function .onInit
         StrCpy "$CYGWIN64_VER" "$R0"
     ${EndIf}
     
-     ClearErrors
-    nsJSON::Get /noexpand `NODEJS` `ver` /end
-    ${IfNot} ${Errors}
-        Pop $R0
-        StrCpy "$NODE_VER" "$R0"
-    ${EndIf}
-    
-    ClearErrors
-    nsJSON::Get /noexpand `NODEJS_64` `ver` /end
-    ${IfNot} ${Errors}
-        Pop $R0
-        StrCpy "$NODE64_VER" "$R0"
-    ${EndIf}
-    
-    ClearErrors
-    nsJSON::Get /noexpand `PYTHON` `ver` /end
-    ${IfNot} ${Errors}
-        Pop $R0
-        StrCpy "$PYTHON_VER" "$R0"
-    ${EndIf}
-    
-    ClearErrors
-    nsJSON::Get /noexpand `PYTHON64` `ver` /end
-    ${IfNot} ${Errors}
-        Pop $R0
-        StrCpy "$PYTHON64_VER" "$R0"
-    ${EndIf}
-     
-    ClearErrors
-    nsJSON::Get /noexpand `MS_BUILD` `ver` /end
-    ${IfNot} ${Errors}
-        Pop $R0
-        StrCpy "$MSBUILD_VER" "$R0"
-    ${EndIf}
-    
     
 FunctionEnd
 
@@ -366,16 +283,26 @@ RequestExecutionLevel admin
 
 ; Pages
 
-Page components
-Page directory
-Page instfiles
+!insertmacro MUI_PAGE_COMPONENTS
+!insertmacro MUI_PAGE_DIRECTORY
+!insertmacro MUI_PAGE_INSTFILES
 
-UninstPage uninstConfirm
-UninstPage instfiles
+!insertmacro MUI_UNPAGE_CONFIRM
+!insertmacro MUI_UNPAGE_INSTFILES
+
+ 
+!insertmacro MUI_LANGUAGE "English"
+
+;~ Page components
+;~ Page directory
+;~ Page instfiles
+;~ 
+;~ UninstPage uninstConfirm
+;~ UninstPage instfiles
 
 InstType "Full"
-InstType "Toolchain Only"
-InstType "CLI Only"
+;~ InstType "Toolchain Only"
+;~ InstType "CLI Only"
 
 
 
@@ -479,17 +406,39 @@ SectionGroup "Particle Firmware" SEC_GRP1
     Section "Firmware" SEC_REQ1
 		AddSize 117720
         SectionIn 1 RO
+        ReadRegDWORD $0 HKLM "${REG_PATH}" "FirmwareCloned"
+		IfErrors CloneFirmware 0
+		${If} $0 = 1
+			DetailPrint "Firmware already cloned; Not doing it again"
+			Goto EndSection
+		${Else}
+			Goto CloneFirmware
+		${EndIf}
+		CloneFirmware:
+		
         SetOutPath "$INSTDIR"
         DetailPrint "Git Clone Firmware"
         nsExec::ExecToLog "git clone https://github.com/spark/firmware"
         SetOutPath "$INSTDIR\firmware"
         nsExec::ExecToLog "git checkout latest"
+        WriteRegDWORD HKLM ${REG_PATH} "FirmwareCloned" 1
+        EndSection:
     SectionEnd
         
     Section "Netbeans Project" SEC_OPT1
 		AddSize 200
         SectionIn 1
-        SetOverwrite off
+        
+        ReadRegDWORD $0 HKLM "${REG_PATH}" "NetbeansProjectInstalled"
+		IfErrors InstallNBProject 0
+		${If} $0 = 1
+			DetailPrint "NB Project already installed; Not doing it again"
+			Goto EndSection
+		${Else}
+			Goto InstallNBProject
+		${EndIf}
+		InstallNBProject:
+		SetOverwrite off
         SetOutPath "$INSTDIR\NBProjects\ParticleFirmware\nbproject"
         File configurations.xml
         File project.xml
@@ -500,40 +449,37 @@ SectionGroup "Particle Firmware" SEC_GRP1
         File Core.properties
         File Launcher.properties
         SetOverwrite on
+        WriteRegDWORD HKLM ${REG_PATH} "NetbeansProjectInstalled" 1
+        EndSection:
     SectionEnd
     
     Section "" PRIVSEC_TOGGLESTATE1 ;hidden section to keep track of state
     SectionEnd
 SectionGroupEnd
 
-Section "Particle CLI"
-	SectionIn 1 3
-	AddSize 123801
-	Call InstallParticleCLI
-SectionEnd
-
-Section "DFU Util"
-	SectionIn 1 3
-	
-	SetOutPath "$INSTDIR\Tools\DFU-util"
-	File dfu*.exe
-	File libusb*.dll
-	DetailPrint "Adding Path"
-	Push "$INSTDIR\Tools\DFU-util"
-	Call AddToPath
-SectionEnd
 
 Section
     ; Write the installation path into the registry
-    WriteRegStr HKLM SOFTWARE\ParticleToolchain "Install_Dir" "$INSTDIR"
+    WriteRegStr HKLM ${REG_PATH} "Install_Dir" "$INSTDIR"
 
     ; Write the uninstall keys for Windows
-    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\ParticleToolchain" "DisplayName" "Particle Toolchain"
-    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\ParticleToolchain" "UninstallString" '"$INSTDIR\uninstall.exe"'
-    WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\ParticleToolchain" "NoModify" 1
-    WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\ParticleToolchain" "NoRepair" 1
-    WriteUninstaller "uninstall.exe"
+    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${SHORT_NAME}" "DisplayName" "${PRODUCT_NAME}"
+    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${SHORT_NAME}" "UninstallString" '"$INSTDIR\uninstall-particle-toolchain.exe"'
+    WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${SHORT_NAME}" "NoModify" 1
+    WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${SHORT_NAME}" "NoRepair" 1
+    WriteUninstaller "uninstall-particle-toolchain.exe"
 SectionEnd
+
+
+LangString DESC_SEC_REQ1 ${LANG_ENGLISH} "git clone the Particle Firmware"
+LangString DESC_SEC_OPT1 ${LANG_ENGLISH} "Netbeans Project for the firmware"
+;~ LangString DESC_Zadig ${LANG_ENGLISH} "Zadig driver replacer for Particle devices (Downloads only, must run after install)"
+
+!insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
+  !insertmacro MUI_DESCRIPTION_TEXT ${SEC_REQ1} $(DESC_SEC_REQ1)
+  !insertmacro MUI_DESCRIPTION_TEXT ${SEC_OPT1} $(DESC_SEC_OPT1)
+  ;~ !insertmacro MUI_DESCRIPTION_TEXT ${Zadig_Section} $(DESC_Zadig)
+!insertmacro MUI_FUNCTION_DESCRIPTION_END
 
 
 ;--------------------------------
@@ -901,151 +847,7 @@ Function InstallCygwin
     EndFunc:
 FunctionEnd
 
-Function InstallParticleCLI
 
-	;; Install NodeJS
-	DetailPrint "Checking NodeJs Version Installed"
-	ClearErrors
-	ReadRegStr $0 HKLM "${REG_PATH}" "NodeJs_Version"
-	IfErrors 0 CheckNodeJS_Ver
-	goto  InstallNodeJS
-	CheckNodeJS_Ver:
-	${VersionCompare} $0 "$NODE_VER" $R0
-    ${If} $R0 == 2
-        DetailPrint "Need to update NodeJS"
-        goto InstallNodeJS
-	${Else}
-		goto CheckDotNet
-    ${EndIf}
-	
-	InstallNodeJS:
-    SetOutPath "$InstDir"
-	DetailPrint "Downloading NodeJS"
-    StrCpy "$TempFile" "$TEMP\node_setup.msi"
-    Download:
-    ${If} ${RunningX64}
-        ; 64 bit code
-        inetc::get /QUESTION "" /RESUME "" /USERAGENT "Wget/1.9.1" "$NODE64_ADDR" "$TempFile" /END
-    ${Else}
-        ; 32 bit code
-        inetc::get /QUESTION "" /RESUME "" /USERAGENT "Wget/1.9.1" "$NODE_ADDR" "$TempFile" /END
-    ${EndIf}
-    Pop $0
-    StrCmp $0 "OK" dlok
-    SetDetailsView show
-    DetailPrint "Error: $0"
-    MessageBox MB_RETRYCANCEL|MB_ICONEXCLAMATION "Download error, Retry?" /SD IDCANCEL IDRETRY Download
-    Abort
-    dlok:
-    DetailPrint "Installing NodeJS"
-    ;SetDetailsPrint none
-    ExecWait 'msiexec /i "$TempFile" INSTALLDIR="$INSTDIR\Tools\NodeJS" /passive'
-    SetDetailsPrint both
-    Delete "$TempFile"
-    WriteRegStr HKLM "${REG_PATH}" "NodeJs_Version" "$NODE_VER"
-	
-	CheckDotNet:
-    ;; Check .Net framework
-    !insertmacro CheckNetFramework 451
-    
-    ;; MS Build Tools
-    ClearErrors
-    EnumRegKey $0 HKLM "Software\Microsoft\MSBuild\ToolsVersions\12.0" 0
-    IfErrors 0 MSBuildInstalled
-    ; Need to install ms build tools   
-    DetailPrint "MS BuildTools not found. Installing."
-    DetailPrint "Downloading MS Build Tools"
-    SetOutPath "$InstDir"
-    StrCpy "$TempFile" "$TEMP\buildtools.exe"
-    Download1:
-    inetc::get /QUESTION "" /RESUME "" /USERAGENT "Wget/1.9.1" "$MSBUILD_ADDR" "$TempFile" /END
-    Pop $0
-    StrCmp $0 "OK" dlok1
-    SetDetailsView show
-    DetailPrint "Error: $0"
-    MessageBox MB_RETRYCANCEL|MB_ICONEXCLAMATION "Download error, Retry?" /SD IDCANCEL IDRETRY Download1
-    Abort
-    dlok1:
-    DetailPrint "Installing MS Build Tools"
-   ; SetDetailsPrint none
-    ExecWait '"$TempFile" /Passive'
-    SetDetailsPrint both
-    Delete "$TempFile"
-    Goto CheckPython
-    
-    
-    MSBuildInstalled:
-    DetailPrint "MS BuildTools Already Installed"
-    
-    
-    CheckPython:
-    ;; Install Python
-    DetailPrint "Checking Python Version Installed"
-	ClearErrors
-	ReadRegStr $0 HKLM "${REG_PATH}" "Python_Version"
-	IfErrors 0 CheckPython_Ver
-	goto  InstallPython
-	CheckPython_Ver:
-	${VersionCompare} $0 "$PYTHON_VER" $R0
-    ${If} $R0 == 2
-        DetailPrint "Need to update Python"
-        goto InstallPython
-	${Else}
-		goto InstallCli
-    ${EndIf}
-	
-	InstallPython:
-	DetailPrint "Downloading Python"
-    StrCpy "$TempFile" "$TEMP\python_setup.msi"
-    Download2:
-    ${If} ${RunningX64}
-        ; 64 bit code
-        inetc::get /QUESTION "" /RESUME "" /USERAGENT "Wget/1.9.1" "$PYTHON64_ADDR" "$TempFile" /END
-    ${Else}
-        ; 32 bit code
-        inetc::get /QUESTION "" /RESUME "" /USERAGENT "Wget/1.9.1" "$PYTHON_ADDR" "$TempFile" /END
-    ${EndIf}
-    Pop $0
-    StrCmp $0 "OK" dlok2
-    SetDetailsView show
-    DetailPrint "Error: $0"
-    MessageBox MB_RETRYCANCEL|MB_ICONEXCLAMATION "Download error, Retry?" /SD IDCANCEL IDRETRY Download2
-    Abort
-    dlok2:
-    DetailPrint "Installing Python"
-    ;SetDetailsPrint none
-    ExecWait 'msiexec /i "$TempFile" TARGETDIR="$INSTDIR\Tools\Python27" ALLUSERS=1 /passive'
-    SetDetailsPrint both
-    Delete "$TempFile"
-    
-    WriteRegStr HKLM "${REG_PATH}" "Python_Version" "$PYTHON_VER"
-    
-    InstallCli:
-    
-    ;; set path
-    ReadEnvStr $R0 "PATH"
-	StrCpy $R0 "$R0;$INSTDIR\Tools\NodeJS;$APPDATA\npm"
-    System::Call 'Kernel32::SetEnvironmentVariable(t, t) i("PATH", R0).r0'
-    ReadEnvStr $R0 "PATH"
-    DetailPrint $R0
-    
-    ;; check if particle-cli installed
-    SetOutPath "$APPDATA\npm"
-    nsExec::ExecToLog "$INSTDIR\Tools\NodeJS\npm.cmd ls particle-cli --parseable true"
-    Pop $0
-    ${If} $0 = 0 ; particle-cli seems to be installed, let's just run an update
-    DetailPrint "Updating Particle CLI"
-	SetOutPath "$INSTDIR\TOOLS\NodeJS"
-	nsExec::ExecToLog 'npm update particle-cli'
-	${else}
-    DetailPrint "Installing Particle CLI"
-   ; SetDetailsPrint none
-	SetOutPath "$INSTDIR\TOOLS\NodeJS"
-	File install-particle-cli.bat
-    nsExec::ExecToLog 'install-particle-cli.bat'
-    Delete install-particle-cli.bat
-    ${endif}
-FunctionEnd
 ;--------------------------------------------------------------------
 ; Path functions
 ;
@@ -1307,12 +1109,12 @@ Function WriteToolchainProperties
     ${ConfigWrite} "$TempFile" `=csm.localhost.toolPath.0.4` `$0` $R0
       
     ;C:\\Particle\\Toolchain\\GCC-ARM\\lib\\gcc\\arm-none-eabi\\4.9.3\\include
-    StrCpy "$TempString" "$INSTDIR\Toolchain\GCC-ARM\lib\gcc\arm-none-eabi\4.9.3\include"
+    StrCpy "$TempString" "$INSTDIR\Toolchain\GCC-ARM\lib\gcc\arm-none-eabi\$GCC_ARM_VER\include"
     ${StrReplace} '$TempString' '\' '\\'
     ${ConfigWrite} "$TempFile" `=csm.localhost.toolSettings.0.0.systemIncludes.0` `$0` $R0
     
     ;C:\\Particle\\Toolchain\\GCC-ARM\\lib\\gcc\\arm-none-eabi\\4.9.3\\include-fixed
-    StrCpy "$TempString" "$INSTDIR\Toolchain\GCC-ARM\lib\gcc\arm-none-eabi\4.9.3\include-fixed"
+    StrCpy "$TempString" "$INSTDIR\Toolchain\GCC-ARM\lib\gcc\arm-none-eabi\$GCC_ARM_VER\include-fixed"
     ${StrReplace} '$TempString' '\' '\\'
     ${ConfigWrite} "$TempFile" `=csm.localhost.toolSettings.0.0.systemIncludes.1` `$0` $R0
     
@@ -1323,27 +1125,27 @@ Function WriteToolchainProperties
     
         
     ;C:\\Particle\\Toolchain\\GCC-ARM\\arm-none-eabi\\include\\c++\\4.9.3
-    StrCpy "$TempString" "$INSTDIR\Toolchain\GCC-ARM\arm-non-eabi\include\c++\4.9.3"
+    StrCpy "$TempString" "$INSTDIR\Toolchain\GCC-ARM\arm-non-eabi\include\c++\$GCC_ARM_VER"
     ${StrReplace}  '$TempString' '\' '\\'
     ${ConfigWrite} "$TempFile" `=csm.localhost.toolSettings.0.1.systemIncludes.0` `$0` $R0
     
     ;C:\\Particle\\Toolchain\\GCC-ARM\\arm-none-eabi\\include\\c++\\4.9.3\\arm-none-eabi
-    StrCpy "$TempString" "$INSTDIR\Toolchain\GCC-ARM\arm-non-eabi\include\c++\4.9.3\arm-non-eabi"
+    StrCpy "$TempString" "$INSTDIR\Toolchain\GCC-ARM\arm-non-eabi\include\c++\$GCC_ARM_VER\arm-non-eabi"
     ${StrReplace} '$TempString' '\' '\\'
     ${ConfigWrite} "$TempFile" `=csm.localhost.toolSettings.0.1.systemIncludes.1` `$0` $R0
     
     ;C:\\Particle\\Toolchain\\GCC-ARM\\arm-none-eabi\\include\\c++\\4.9.3\\backward
-    StrCpy "$TempString" "$INSTDIR\Toolchain\GCC-ARM\arm-non-eabi\include\c++\4.9.3\backward"
+    StrCpy "$TempString" "$INSTDIR\Toolchain\GCC-ARM\arm-non-eabi\include\c++\$GCC_ARM_VER\backward"
     ${StrReplace} '$TempString' '\' '\\'
     ${ConfigWrite} "$TempFile" `=csm.localhost.toolSettings.0.1.systemIncludes.2` `$0` $R0
     
     ;C:\\Particle\\Toolchain\\GCC-ARM\\lib\\gcc\\arm-none-eabi\\4.9.3\\include
-    StrCpy "$TempString" "$INSTDIR\Toolchain\GCC-ARM\lib\gcc\arm-non-eabi\4.9.3\include"
+    StrCpy "$TempString" "$INSTDIR\Toolchain\GCC-ARM\lib\gcc\arm-non-eabi\$GCC_ARM_VER\include"
     ${StrReplace} '$TempString' '\' '\\'
     ${ConfigWrite} "$TempFile" `=csm.localhost.toolSettings.0.1.systemIncludes.3` `$0` $R0
     
     ;C:\\Particle\\Toolchain\\GCC-ARM\\lib\\gcc\\arm-none-eabi\\4.9.3\\include-fixed
-    StrCpy "$TempString" "$INSTDIR\Toolchain\GCC-ARM\lib\gcc\arm-non-eabi\4.9.3\include-fixed"
+    StrCpy "$TempString" "$INSTDIR\Toolchain\GCC-ARM\lib\gcc\arm-non-eabi\$GCC_ARM_VER\include-fixed"
     ${StrReplace} '$TempString' '\' '\\'
     ${ConfigWrite} "$TempFile" `=csm.localhost.toolSettings.0.1.systemIncludes.4` `$0` $R0
     
