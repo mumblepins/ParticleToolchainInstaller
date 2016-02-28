@@ -78,7 +78,7 @@ Name "${PRODUCT_NAME}"
 !define StrReplace '!insertmacro "_StrReplaceConstructor"'
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-!define JSON_ADDRESS "http://chip.dansull.com/sources.json"
+!define JSON_ADDRESS "https://raw.githubusercontent.com/mumblepins/ParticleToolchainInstaller/master/sources.json"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ShowInstDetails show
 
@@ -96,7 +96,7 @@ Function .onInit
     StrCpy "$INSTDIR" "$INSTDIR\Particle"
     
     Var /GLOBAL TempFile
-    Var /GLOBAL TempString
+    ;~ Var /GLOBAL TempString
     
     Var /GLOBAL GCC_ARM_ADDRESS
     Var /GLOBAL MAKE_BINARY_ADDRESS
@@ -301,6 +301,7 @@ RequestExecutionLevel admin
 ;~ UninstPage instfiles
 
 InstType "Full"
+InstType "Building Only"
 ;~ InstType "Toolchain Only"
 ;~ InstType "CLI Only"
 
@@ -311,8 +312,8 @@ InstType "Full"
 ; The stuff to install
 
 
-SectionGroup "Toolchain"
-    Section "Make"
+SectionGroup "Toolchain" SEC_Toolchain
+    Section "Make" SEC_Make
         SectionIn 1 2
         AddSize 2263
         DetailPrint "Installing Make"
@@ -325,7 +326,7 @@ SectionGroup "Toolchain"
               
     SectionEnd
     
-    Section "MinGW"
+    Section "MinGW" SEC_MinGW
         SectionIn 1 2
         AddSize 441344
         DetailPrint "Installing MinGW"
@@ -345,7 +346,7 @@ SectionGroup "Toolchain"
         
     SectionEnd
     
-    Section "GCC ARM"
+    Section "GCC ARM" SEC_GCC
         SectionIn 1 2
         AddSize 314368
         DetailPrint "Installing GCC ARM"
@@ -362,8 +363,8 @@ SectionGroup "Toolchain"
     SectionEnd
 SectionGroupEnd
 
-Section Git
-    SectionIn 1
+Section Git SEC_Git
+    SectionIn 1 2
     AddSize 270336
     DetailPrint "Installing Git"
     Call InstallGit
@@ -376,36 +377,10 @@ Section Git
             
 SectionEnd
 
-SectionGroup "Netbeans (Install JDK if not installed)" SEC_GRP
-    Section "Netbeans" SEC_REQ
-		AddSize 248832
-        SectionIn 1 RO
-        DetailPrint "Installing Netbeans"
-        Call InstallNetbeans
-        
-    SectionEnd
-    
-    Section "Config" SEC_OPT
-        SectionIn 1
-        DetailPrint "Writing Netbeans Config"
-        Call WriteToolchainProperties
-    SectionEnd
-    
-    Section "" PRIVSEC_TOGGLESTATE ;hidden section to keep track of state
-    SectionEnd
-SectionGroupEnd
-
-Section "Cygwin (needed for automatic build in Netbeans)"
-    SectionIn 1
-    AddSize 144384
-    DetailPrint "Installing Cygwin"
-    Call InstallCygwin
-SectionEnd
-
 SectionGroup "Particle Firmware" SEC_GRP1
     Section "Firmware" SEC_REQ1
 		AddSize 117720
-        SectionIn 1 RO
+        SectionIn 1 2 RO
         ReadRegDWORD $0 HKLM "${REG_PATH}" "FirmwareCloned"
 		IfErrors CloneFirmware 0
 		${If} $0 = 1
@@ -457,6 +432,41 @@ SectionGroup "Particle Firmware" SEC_GRP1
     SectionEnd
 SectionGroupEnd
 
+Section "Netbeans" SEC_Netbeans
+		AddSize 248832
+        SectionIn 1
+        DetailPrint "Installing Netbeans"
+        Call InstallNetbeans
+SectionEnd
+
+;~ SectionGroup "Netbeans (Install JDK if not installed)" SEC_GRP
+    ;~ Section "Netbeans" SEC_REQ
+		;~ AddSize 248832
+        ;~ SectionIn 1 RO
+        ;~ DetailPrint "Installing Netbeans"
+        ;~ Call InstallNetbeans
+        ;~ 
+    ;~ SectionEnd
+    ;~ 
+    ;~ Section "Config" SEC_OPT
+        ;~ SectionIn 1
+        ;~ DetailPrint "Writing Netbeans Config"
+        ;~ Call WriteToolchainProperties
+    ;~ SectionEnd
+    ;~ 
+    ;~ Section "" PRIVSEC_TOGGLESTATE ;hidden section to keep track of state
+    ;~ SectionEnd
+;~ SectionGroupEnd
+
+Section "Cygwin" SEC_Cygwin
+    SectionIn 1
+    AddSize 144384
+    DetailPrint "Installing Cygwin"
+    Call InstallCygwin
+SectionEnd
+
+
+
 
 Section
     ; Write the installation path into the registry
@@ -473,12 +483,29 @@ SectionEnd
 
 LangString DESC_SEC_REQ1 ${LANG_ENGLISH} "git clone the Particle Firmware"
 LangString DESC_SEC_OPT1 ${LANG_ENGLISH} "Netbeans Project for the firmware"
-;~ LangString DESC_Zadig ${LANG_ENGLISH} "Zadig driver replacer for Particle devices (Downloads only, must run after install)"
+LangString DESC_Netbeans ${LANG_ENGLISH} "Netbeans (will also install JDK). Note: Will need to add compiler to Netbeans manually."
+LangString DESC_Cygwin ${LANG_ENGLISH} "Cygwin. 'Get that Linux Feeling on Windows'  Needed for automagic Netbeans build. Note: Will need to add compiler to Netbeans manually."
+LangString DESC_Toolchain ${LANG_ENGLISH} "The tools necessary to build the Particle Firmware"
+LangString DESC_Make ${LANG_ENGLISH} "Make for Windows tool for buillding"
+LangString DESC_MinGW ${LANG_ENGLISH} "MinGW for Windows"
+LangString DESC_GCC ${LANG_ENGLISH} "GCC Toolchain"
+LangString DESC_Git ${LANG_ENGLISH} "Git for cloning the Firmware"
+
+
 
 !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
+  !insertmacro MUI_DESCRIPTION_TEXT ${SEC_GRP1} $(DESC_SEC_REQ1)
   !insertmacro MUI_DESCRIPTION_TEXT ${SEC_REQ1} $(DESC_SEC_REQ1)
   !insertmacro MUI_DESCRIPTION_TEXT ${SEC_OPT1} $(DESC_SEC_OPT1)
-  ;~ !insertmacro MUI_DESCRIPTION_TEXT ${Zadig_Section} $(DESC_Zadig)
+  !insertmacro MUI_DESCRIPTION_TEXT ${SEC_Netbeans} $(DESC_Netbeans)
+  !insertmacro MUI_DESCRIPTION_TEXT ${SEC_Cygwin} $(DESC_Cygwin)
+  
+  !insertmacro MUI_DESCRIPTION_TEXT ${SEC_Toolchain} $(DESC_Toolchain)
+  !insertmacro MUI_DESCRIPTION_TEXT ${SEC_Make} $(DESC_Make)
+  !insertmacro MUI_DESCRIPTION_TEXT ${SEC_MinGW} $(DESC_MinGW)
+  !insertmacro MUI_DESCRIPTION_TEXT ${SEC_GCC} $(DESC_GCC)
+  !insertmacro MUI_DESCRIPTION_TEXT ${SEC_Git} $(DESC_Git)
+  
 !insertmacro MUI_FUNCTION_DESCRIPTION_END
 
 
@@ -523,20 +550,20 @@ SectionEnd
 
 Function .onSelChange
     !define /math SECFLAGS_SELRO ${SF_SELECTED} | ${SF_RO}
-    ${IfNot} ${SectionIsSelected} ${PRIVSEC_TOGGLESTATE}
-    ${AndIf} ${SectionIsReadOnly} ${SEC_REQ}
-        !insertmacro ClearSectionFlag ${SEC_REQ} ${SECFLAGS_SELRO}
-    ${EndIf}
-    ${If} ${SectionIsSelected} ${SEC_OPT}
-        !insertmacro SetSectionFlag ${SEC_REQ} ${SECFLAGS_SELRO} 
-    ${Else}
-        !insertmacro ClearSectionFlag ${SEC_REQ} ${SF_RO}
-    ${EndIf}
-    ${If} ${SectionIsSelected} ${SEC_REQ}
-        !insertmacro SelectSection ${PRIVSEC_TOGGLESTATE}
-    ${Else}
-        !insertmacro UnselectSection ${PRIVSEC_TOGGLESTATE}
-    ${EndIf}
+    ;~ ${IfNot} ${SectionIsSelected} ${PRIVSEC_TOGGLESTATE}
+    ;~ ${AndIf} ${SectionIsReadOnly} ${SEC_REQ}
+        ;~ !insertmacro ClearSectionFlag ${SEC_REQ} ${SECFLAGS_SELRO}
+    ;~ ${EndIf}
+    ;~ ${If} ${SectionIsSelected} ${SEC_OPT}
+        ;~ !insertmacro SetSectionFlag ${SEC_REQ} ${SECFLAGS_SELRO} 
+    ;~ ${Else}
+        ;~ !insertmacro ClearSectionFlag ${SEC_REQ} ${SF_RO}
+    ;~ ${EndIf}
+    ;~ ${If} ${SectionIsSelected} ${SEC_REQ}
+        ;~ !insertmacro SelectSection ${PRIVSEC_TOGGLESTATE}
+    ;~ ${Else}
+        ;~ !insertmacro UnselectSection ${PRIVSEC_TOGGLESTATE}
+    ;~ ${EndIf}
     
     ${IfNot} ${SectionIsSelected} ${PRIVSEC_TOGGLESTATE1}
     ${AndIf} ${SectionIsReadOnly} ${SEC_REQ1}
@@ -1030,140 +1057,140 @@ FunctionEnd
 
 
 
-Function StrRep
-  Exch $R4 ; $R4 = Replacement String
-  Exch
-  Exch $R3 ; $R3 = String to replace (needle)
-  Exch 2
-  Exch $R1 ; $R1 = String to do replacement in (haystack)
-  Push $R2 ; Replaced haystack
-  Push $R5 ; Len (needle)
-  Push $R6 ; len (haystack)
-  Push $R7 ; Scratch reg
-  StrCpy $R2 ""
-  StrLen $R5 $R3
-  StrLen $R6 $R1
-loop:
-  StrCpy $R7 $R1 $R5
-  StrCmp $R7 $R3 found
-  StrCpy $R7 $R1 1 ; - optimization can be removed if U know len needle=1
-  StrCpy $R2 "$R2$R7"
-  StrCpy $R1 $R1 $R6 1
-  StrCmp $R1 "" done loop
-found:
-  StrCpy $R2 "$R2$R4"
-  StrCpy $R1 $R1 $R6 $R5
-  StrCmp $R1 "" done loop
-done:
-  StrCpy $R3 $R2
-  Pop $R7
-  Pop $R6
-  Pop $R5
-  Pop $R2
-  Pop $R1
-  Pop $R4
-  Exch $R3
-FunctionEnd
-
-Function WriteToolchainProperties
-	SetOverWrite off
-    ; Writes the toolchain properties for netbeans.  Won't overwrite existing
-    ; config file, so if Netbeans has already been installed, this will need to be set up manually
-    SetOutPath "$APPDATA\NetBeans\$NETBEANS_VER\config\Preferences\org\netbeans\modules\cnd"
-    
-    SetShellVarContext current
-    
-    StrCpy "$TempFile" "$APPDATA\NetBeans\$NETBEANS_VER\config\Preferences\org\netbeans\modules\cnd\remote.properties"
-    IfFileExists "$TempFile" continue 0
-    File remote.properties
-    
-    continue: 
-    StrCpy "$TempFile" "$APPDATA\NetBeans\$NETBEANS_VER\config\Preferences\org\netbeans\modules\cnd\toolchain.properties"
-    
-    IfFileExists "$TempFile" toolchainExists 0
-    File toolchain.properties
-     
-    ;C:\\Particle\\Toolchain\\GCC-ARM
-    StrCpy "$TempString" "$INSTDIR\Toolchain\GCC-ARM"
-    ${StrReplace} '$TempString' '\' '\\'
-    ${ConfigWrite} "$TempFile" `=csm.localhost.setDirectory.0` `$0` $R0
-    
-    ;C:\\Particle\\Toolchain\\GCC-ARM\\bin\\arm-none-eabi-gcc.exe
-    StrCpy "$TempString" "$INSTDIR\Toolchain\GCC-ARM\bin\arm-none-eabi-gcc.exe"
-    ${StrReplace} '$TempString' '\' '\\'
-    ${ConfigWrite} "$TempFile" `=csm.localhost.toolPath.0.0` `$0` $R0
-    
-    ;C:\\Particle\\Toolchain\\GCC-ARM\\bin\\arm-none-eabi-g++.exe
-    StrCpy "$TempString" "$INSTDIR\Toolchain\GCC-ARM\bin\arm-none-eabi-g++.exe"
-    ${StrReplace} '$TempString' '\' '\\'
-    ${ConfigWrite} "$TempFile" `=csm.localhost.toolPath.0.1` `$0` $R0
-    
-    ;C:\\Particle\\Toolchain\\GCC-ARM\\bin\\arm-none-eabi-as.exe
-    StrCpy "$TempString" "$INSTDIR\Toolchain\GCC-ARM\bin\arm-none-eabi-as.exe"
-    ${StrReplace} '$TempString' '\' '\\'
-    ${ConfigWrite} "$TempFile" `=csm.localhost.toolPath.0.3` `$0` $R0
-    
-    ;C:\\Particle\\Toolchain\\Make\\bin\\make.exe
-    StrCpy "$TempString" "$INSTDIR\Toolchain\Make\bin\make.exe"
-    ${StrReplace} '$TempString' '\' '\\'
-    ${ConfigWrite} "$TempFile" `=csm.localhost.toolPath.0.4` `$0` $R0
-      
-    ;C:\\Particle\\Toolchain\\GCC-ARM\\lib\\gcc\\arm-none-eabi\\4.9.3\\include
-    StrCpy "$TempString" "$INSTDIR\Toolchain\GCC-ARM\lib\gcc\arm-none-eabi\$GCC_ARM_VER\include"
-    ${StrReplace} '$TempString' '\' '\\'
-    ${ConfigWrite} "$TempFile" `=csm.localhost.toolSettings.0.0.systemIncludes.0` `$0` $R0
-    
-    ;C:\\Particle\\Toolchain\\GCC-ARM\\lib\\gcc\\arm-none-eabi\\4.9.3\\include-fixed
-    StrCpy "$TempString" "$INSTDIR\Toolchain\GCC-ARM\lib\gcc\arm-none-eabi\$GCC_ARM_VER\include-fixed"
-    ${StrReplace} '$TempString' '\' '\\'
-    ${ConfigWrite} "$TempFile" `=csm.localhost.toolSettings.0.0.systemIncludes.1` `$0` $R0
-    
-    ;C:\\Particle\\Toolchain\\GCC-ARM\\arm-none-eabi\\include
-    StrCpy "$TempString" "$INSTDIR\Toolchain\GCC-ARM\arm-non-eabi\include"
-    ${StrReplace}  '$TempString' '\' '\\'
-    ${ConfigWrite} "$TempFile" `=csm.localhost.toolSettings.0.0.systemIncludes.2` `$0` $R0
-    
-        
-    ;C:\\Particle\\Toolchain\\GCC-ARM\\arm-none-eabi\\include\\c++\\4.9.3
-    StrCpy "$TempString" "$INSTDIR\Toolchain\GCC-ARM\arm-non-eabi\include\c++\$GCC_ARM_VER"
-    ${StrReplace}  '$TempString' '\' '\\'
-    ${ConfigWrite} "$TempFile" `=csm.localhost.toolSettings.0.1.systemIncludes.0` `$0` $R0
-    
-    ;C:\\Particle\\Toolchain\\GCC-ARM\\arm-none-eabi\\include\\c++\\4.9.3\\arm-none-eabi
-    StrCpy "$TempString" "$INSTDIR\Toolchain\GCC-ARM\arm-non-eabi\include\c++\$GCC_ARM_VER\arm-non-eabi"
-    ${StrReplace} '$TempString' '\' '\\'
-    ${ConfigWrite} "$TempFile" `=csm.localhost.toolSettings.0.1.systemIncludes.1` `$0` $R0
-    
-    ;C:\\Particle\\Toolchain\\GCC-ARM\\arm-none-eabi\\include\\c++\\4.9.3\\backward
-    StrCpy "$TempString" "$INSTDIR\Toolchain\GCC-ARM\arm-non-eabi\include\c++\$GCC_ARM_VER\backward"
-    ${StrReplace} '$TempString' '\' '\\'
-    ${ConfigWrite} "$TempFile" `=csm.localhost.toolSettings.0.1.systemIncludes.2` `$0` $R0
-    
-    ;C:\\Particle\\Toolchain\\GCC-ARM\\lib\\gcc\\arm-none-eabi\\4.9.3\\include
-    StrCpy "$TempString" "$INSTDIR\Toolchain\GCC-ARM\lib\gcc\arm-non-eabi\$GCC_ARM_VER\include"
-    ${StrReplace} '$TempString' '\' '\\'
-    ${ConfigWrite} "$TempFile" `=csm.localhost.toolSettings.0.1.systemIncludes.3` `$0` $R0
-    
-    ;C:\\Particle\\Toolchain\\GCC-ARM\\lib\\gcc\\arm-none-eabi\\4.9.3\\include-fixed
-    StrCpy "$TempString" "$INSTDIR\Toolchain\GCC-ARM\lib\gcc\arm-non-eabi\$GCC_ARM_VER\include-fixed"
-    ${StrReplace} '$TempString' '\' '\\'
-    ${ConfigWrite} "$TempFile" `=csm.localhost.toolSettings.0.1.systemIncludes.4` `$0` $R0
-    
-    ;C:\\Particle\\Toolchain\\GCC-ARM\\arm-none-eabi\\include
-    StrCpy "$TempString" "$INSTDIR\Toolchain\GCC-ARM\arm-non-eabi\include"
-    ${StrReplace} '$TempString' '\' '\\'
-    ${ConfigWrite} "$TempFile" `=csm.localhost.toolSettings.0.1.systemIncludes.5` `$0` $R0
-    
-    toolchainExists:
-    SetOutPath "$APPDATA\NetBeans\$NETBEANS_VER\config\Preferences\org\netbeans\modules\cnd\modelimpl\RepositoryUpdater"
-    StrCpy "$TempFile" "$APPDATA\NetBeans\$NETBEANS_VER\config\Preferences\org\netbeans\modules\cnd\modelimpl\RepositoryUpdater\cnd.properties"
-    
-    IfFileExists "$TempFile" endFunc 0
-    File cnd.properties
-    endFunc:
-    
-    SetOverwrite on
-FunctionEnd
+;~ Function StrRep
+  ;~ Exch $R4 ; $R4 = Replacement String
+  ;~ Exch
+  ;~ Exch $R3 ; $R3 = String to replace (needle)
+  ;~ Exch 2
+  ;~ Exch $R1 ; $R1 = String to do replacement in (haystack)
+  ;~ Push $R2 ; Replaced haystack
+  ;~ Push $R5 ; Len (needle)
+  ;~ Push $R6 ; len (haystack)
+  ;~ Push $R7 ; Scratch reg
+  ;~ StrCpy $R2 ""
+  ;~ StrLen $R5 $R3
+  ;~ StrLen $R6 $R1
+;~ loop:
+  ;~ StrCpy $R7 $R1 $R5
+  ;~ StrCmp $R7 $R3 found
+  ;~ StrCpy $R7 $R1 1 ; - optimization can be removed if U know len needle=1
+  ;~ StrCpy $R2 "$R2$R7"
+  ;~ StrCpy $R1 $R1 $R6 1
+  ;~ StrCmp $R1 "" done loop
+;~ found:
+  ;~ StrCpy $R2 "$R2$R4"
+  ;~ StrCpy $R1 $R1 $R6 $R5
+  ;~ StrCmp $R1 "" done loop
+;~ done:
+  ;~ StrCpy $R3 $R2
+  ;~ Pop $R7
+  ;~ Pop $R6
+  ;~ Pop $R5
+  ;~ Pop $R2
+  ;~ Pop $R1
+  ;~ Pop $R4
+  ;~ Exch $R3
+;~ FunctionEnd
+;~ 
+;~ Function WriteToolchainProperties
+	;~ SetOverWrite off
+    ;~ ; Writes the toolchain properties for netbeans.  Won't overwrite existing
+    ;~ ; config file, so if Netbeans has already been installed, this will need to be set up manually
+    ;~ SetOutPath "$APPDATA\NetBeans\$NETBEANS_VER\config\Preferences\org\netbeans\modules\cnd"
+    ;~ 
+    ;~ SetShellVarContext current
+    ;~ 
+    ;~ StrCpy "$TempFile" "$APPDATA\NetBeans\$NETBEANS_VER\config\Preferences\org\netbeans\modules\cnd\remote.properties"
+    ;~ IfFileExists "$TempFile" continue 0
+    ;~ File remote.properties
+    ;~ 
+    ;~ continue: 
+    ;~ StrCpy "$TempFile" "$APPDATA\NetBeans\$NETBEANS_VER\config\Preferences\org\netbeans\modules\cnd\toolchain.properties"
+    ;~ 
+    ;~ IfFileExists "$TempFile" toolchainExists 0
+    ;~ File toolchain.properties
+     ;~ 
+    ;~ ;C:\\Particle\\Toolchain\\GCC-ARM
+    ;~ StrCpy "$TempString" "$INSTDIR\Toolchain\GCC-ARM"
+    ;~ ${StrReplace} '$TempString' '\' '\\'
+    ;~ ${ConfigWrite} "$TempFile" `=csm.localhost.setDirectory.0` `$0` $R0
+    ;~ 
+    ;~ ;C:\\Particle\\Toolchain\\GCC-ARM\\bin\\arm-none-eabi-gcc.exe
+    ;~ StrCpy "$TempString" "$INSTDIR\Toolchain\GCC-ARM\bin\arm-none-eabi-gcc.exe"
+    ;~ ${StrReplace} '$TempString' '\' '\\'
+    ;~ ${ConfigWrite} "$TempFile" `=csm.localhost.toolPath.0.0` `$0` $R0
+    ;~ 
+    ;~ ;C:\\Particle\\Toolchain\\GCC-ARM\\bin\\arm-none-eabi-g++.exe
+    ;~ StrCpy "$TempString" "$INSTDIR\Toolchain\GCC-ARM\bin\arm-none-eabi-g++.exe"
+    ;~ ${StrReplace} '$TempString' '\' '\\'
+    ;~ ${ConfigWrite} "$TempFile" `=csm.localhost.toolPath.0.1` `$0` $R0
+    ;~ 
+    ;~ ;C:\\Particle\\Toolchain\\GCC-ARM\\bin\\arm-none-eabi-as.exe
+    ;~ StrCpy "$TempString" "$INSTDIR\Toolchain\GCC-ARM\bin\arm-none-eabi-as.exe"
+    ;~ ${StrReplace} '$TempString' '\' '\\'
+    ;~ ${ConfigWrite} "$TempFile" `=csm.localhost.toolPath.0.3` `$0` $R0
+    ;~ 
+    ;~ ;C:\\Particle\\Toolchain\\Make\\bin\\make.exe
+    ;~ StrCpy "$TempString" "$INSTDIR\Toolchain\Make\bin\make.exe"
+    ;~ ${StrReplace} '$TempString' '\' '\\'
+    ;~ ${ConfigWrite} "$TempFile" `=csm.localhost.toolPath.0.4` `$0` $R0
+      ;~ 
+    ;~ ;C:\\Particle\\Toolchain\\GCC-ARM\\lib\\gcc\\arm-none-eabi\\4.9.3\\include
+    ;~ StrCpy "$TempString" "$INSTDIR\Toolchain\GCC-ARM\lib\gcc\arm-none-eabi\$GCC_ARM_VER\include"
+    ;~ ${StrReplace} '$TempString' '\' '\\'
+    ;~ ${ConfigWrite} "$TempFile" `=csm.localhost.toolSettings.0.0.systemIncludes.0` `$0` $R0
+    ;~ 
+    ;~ ;C:\\Particle\\Toolchain\\GCC-ARM\\lib\\gcc\\arm-none-eabi\\4.9.3\\include-fixed
+    ;~ StrCpy "$TempString" "$INSTDIR\Toolchain\GCC-ARM\lib\gcc\arm-none-eabi\$GCC_ARM_VER\include-fixed"
+    ;~ ${StrReplace} '$TempString' '\' '\\'
+    ;~ ${ConfigWrite} "$TempFile" `=csm.localhost.toolSettings.0.0.systemIncludes.1` `$0` $R0
+    ;~ 
+    ;~ ;C:\\Particle\\Toolchain\\GCC-ARM\\arm-none-eabi\\include
+    ;~ StrCpy "$TempString" "$INSTDIR\Toolchain\GCC-ARM\arm-non-eabi\include"
+    ;~ ${StrReplace}  '$TempString' '\' '\\'
+    ;~ ${ConfigWrite} "$TempFile" `=csm.localhost.toolSettings.0.0.systemIncludes.2` `$0` $R0
+    ;~ 
+        ;~ 
+    ;~ ;C:\\Particle\\Toolchain\\GCC-ARM\\arm-none-eabi\\include\\c++\\4.9.3
+    ;~ StrCpy "$TempString" "$INSTDIR\Toolchain\GCC-ARM\arm-non-eabi\include\c++\$GCC_ARM_VER"
+    ;~ ${StrReplace}  '$TempString' '\' '\\'
+    ;~ ${ConfigWrite} "$TempFile" `=csm.localhost.toolSettings.0.1.systemIncludes.0` `$0` $R0
+    ;~ 
+    ;~ ;C:\\Particle\\Toolchain\\GCC-ARM\\arm-none-eabi\\include\\c++\\4.9.3\\arm-none-eabi
+    ;~ StrCpy "$TempString" "$INSTDIR\Toolchain\GCC-ARM\arm-non-eabi\include\c++\$GCC_ARM_VER\arm-non-eabi"
+    ;~ ${StrReplace} '$TempString' '\' '\\'
+    ;~ ${ConfigWrite} "$TempFile" `=csm.localhost.toolSettings.0.1.systemIncludes.1` `$0` $R0
+    ;~ 
+    ;~ ;C:\\Particle\\Toolchain\\GCC-ARM\\arm-none-eabi\\include\\c++\\4.9.3\\backward
+    ;~ StrCpy "$TempString" "$INSTDIR\Toolchain\GCC-ARM\arm-non-eabi\include\c++\$GCC_ARM_VER\backward"
+    ;~ ${StrReplace} '$TempString' '\' '\\'
+    ;~ ${ConfigWrite} "$TempFile" `=csm.localhost.toolSettings.0.1.systemIncludes.2` `$0` $R0
+    ;~ 
+    ;~ ;C:\\Particle\\Toolchain\\GCC-ARM\\lib\\gcc\\arm-none-eabi\\4.9.3\\include
+    ;~ StrCpy "$TempString" "$INSTDIR\Toolchain\GCC-ARM\lib\gcc\arm-non-eabi\$GCC_ARM_VER\include"
+    ;~ ${StrReplace} '$TempString' '\' '\\'
+    ;~ ${ConfigWrite} "$TempFile" `=csm.localhost.toolSettings.0.1.systemIncludes.3` `$0` $R0
+    ;~ 
+    ;~ ;C:\\Particle\\Toolchain\\GCC-ARM\\lib\\gcc\\arm-none-eabi\\4.9.3\\include-fixed
+    ;~ StrCpy "$TempString" "$INSTDIR\Toolchain\GCC-ARM\lib\gcc\arm-non-eabi\$GCC_ARM_VER\include-fixed"
+    ;~ ${StrReplace} '$TempString' '\' '\\'
+    ;~ ${ConfigWrite} "$TempFile" `=csm.localhost.toolSettings.0.1.systemIncludes.4` `$0` $R0
+    ;~ 
+    ;~ ;C:\\Particle\\Toolchain\\GCC-ARM\\arm-none-eabi\\include
+    ;~ StrCpy "$TempString" "$INSTDIR\Toolchain\GCC-ARM\arm-non-eabi\include"
+    ;~ ${StrReplace} '$TempString' '\' '\\'
+    ;~ ${ConfigWrite} "$TempFile" `=csm.localhost.toolSettings.0.1.systemIncludes.5` `$0` $R0
+    ;~ 
+    ;~ toolchainExists:
+    ;~ SetOutPath "$APPDATA\NetBeans\$NETBEANS_VER\config\Preferences\org\netbeans\modules\cnd\modelimpl\RepositoryUpdater"
+    ;~ StrCpy "$TempFile" "$APPDATA\NetBeans\$NETBEANS_VER\config\Preferences\org\netbeans\modules\cnd\modelimpl\RepositoryUpdater\cnd.properties"
+    ;~ 
+    ;~ IfFileExists "$TempFile" endFunc 0
+    ;~ File cnd.properties
+    ;~ endFunc:
+    ;~ 
+    ;~ SetOverwrite on
+;~ FunctionEnd
     
     
     
