@@ -148,8 +148,8 @@
       <makefileType>
         <makeTool>
           <buildCommandWorkingDir>../../firmware</buildCommandWorkingDir>
-          <buildCommand>${MAKE} PLATFORM=core</buildCommand>
-          <cleanCommand>${MAKE} clean PLATFORM=core</cleanCommand>
+          <buildCommand>${MAKE} -r PLATFORM=core</buildCommand>
+          <cleanCommand>${MAKE} clean -r PLATFORM=core</cleanCommand>
           <executablePath>../../firmware/build/target/main/platform-0-lto/main.bin</executablePath>
         </makeTool>
       </makefileType>
@@ -1330,8 +1330,8 @@
       <makefileType>
         <makeTool>
           <buildCommandWorkingDir>../../firmware</buildCommandWorkingDir>
-          <buildCommand>${MAKE} PLATFORM=photon</buildCommand>
-          <cleanCommand>${MAKE} clean PLATFORM=photon</cleanCommand>
+          <buildCommand>${MAKE} -r PLATFORM=photon</buildCommand>
+          <cleanCommand>${MAKE} clean -r PLATFORM=photon</cleanCommand>
           <executablePath>../../firmware/build/target/user-part/platform-6-m/user-part.bin</executablePath>
         </makeTool>
       </makefileType>
