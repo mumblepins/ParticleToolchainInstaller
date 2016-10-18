@@ -1,7 +1,7 @@
 {
   "GCC": {
-    "url": "https://launchpad.net/gcc-arm-embedded/4.9/4.9-2015-q3-update/+download/gcc-arm-none-eabi-4_9-2015q3-20150921-win32.zip",
-    "ver": "4.9.3"
+    "url": "https://launchpad.net/gcc-arm-embedded/5.0/5-2016-q3-update/+download/gcc-arm-none-eabi-5_4-2016q3-20160926-win32.zip",
+    "ver": "5.4.3"
   },
   "MAKE_BIN": {
     "url": "http://gnuwin32.sourceforge.net/downlinks/make-bin-zip.php",
@@ -16,16 +16,16 @@
     "ver": "0.6.2"
   },
   "GIT": {
-    "url": "https://github.com/git-for-windows/git/releases/download/v2.7.2.windows.1/Git-2.7.2-32-bit.exe",
-    "ver": "2.7.2"
+    "url": "https://github.com/git-for-windows/git/releases/download/v2.10.1.windows.1/Git-2.10.1-32-bit.exe",
+    "ver": "2.10.1"
   },
   "GIT_64": {
-    "url": "https://github.com/git-for-windows/git/releases/download/v2.7.2.windows.1/Git-2.7.2-64-bit.exe",
-    "ver": "2.7.2"
+    "url": "https://github.com/git-for-windows/git/releases/download/v2.10.1.windows.1/Git-2.10.1-64-bit.exe",
+    "ver": "2.10.1"
   },
   "NETBEANS": {
-    "url": "http://download.netbeans.org/netbeans/8.1/final/bundles/netbeans-8.1-cpp-windows-x86.exe",
-    "ver": "8.1"
+    "url": "http://download.netbeans.org/netbeans/8.2/final/bundles/netbeans-8.2-cpp-windows-x86.exe",
+    "ver": "8.2"
   },
   "CYGWIN_X86": {
     "url": "https://cygwin.com/setup-x86.exe",
@@ -36,11 +36,11 @@
     "ver": "2.873"
   },
   "JDK": {
-    "url": "http://download.oracle.com/otn-pub/java/jdk/8u74-b02/jdk-8u74-windows-i586.exe",
-    "ver": "1.8.0.74"
+    "url": "http://download.oracle.com/otn-pub/java/jdk/8u102-b14/jdk-8u102-windows-i586.exe",
+    "ver": "1.8.0.102"
   },
   "JDK64": {
-    "url": "http://download.oracle.com/otn-pub/java/jdk/8u74-b02/jdk-8u74-windows-x64.exe",
-    "ver": "1.8.0.74"
+    "url": "http://download.oracle.com/otn-pub/java/jdk/8u102-b14/jdk-8u102-windows-x64.exe",
+    "ver": "1.8.0.102"
   }
 }
