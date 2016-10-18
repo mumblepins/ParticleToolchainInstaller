@@ -26,6 +26,12 @@ The installer will also add the necessary paths to the user PATH environment var
   * Photon: `firmware\build\target\user-part\platform-6-m\user-part.bin`
 6. If you want to build as an application, right click on the project, go to properties, and change the appropriate 'make' lines
 
+
+### General build instructions
+See [the Particle firmware docs](https://github.com/spark/firmware/blob/develop/docs/build.md) for building from the command line
+
+In general, a `make` or `make PLATFORM=photon` should compile successfully from the root of the firmware directory, assuming all of the PATH items got set correctly.  You may need a reboot of the computer between installation and successfull making, to help Windows figure out it's stuff.
+
 ##License
 * All packages are copyright their respective owners.  See individual websites for details.
 * Installation files are released under the ISC license
